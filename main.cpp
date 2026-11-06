@@ -8,4 +8,7 @@ int main()
 	//	| ￣U U￣￣￣￣￣￣￣￣￣|
 	//	|       (Bismillah!!) |
 	//	 ￣￣￣￣￣￣￣￣￣￣￣￣
+
 }
+
+// Setup Complete! ♡ ∩__∩
