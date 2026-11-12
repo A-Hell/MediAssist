@@ -157,6 +157,36 @@
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
+    <ClCompile Include="Storage\FileManager.cpp" />
+    <ClCompile Include="Structures\Queue.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Interface\CLI.h" />
+    <ClInclude Include="Interface\GUI.h" />
+    <ClInclude Include="Managers\AppointmentManager.h" />
+    <ClInclude Include="Managers\DepartmentManager.h" />
+    <ClInclude Include="Managers\DoctorManager.h" />
+    <ClInclude Include="Managers\HospitalSystem.h" />
+    <ClInclude Include="Managers\PatientManager.h" />
+    <ClInclude Include="Managers\TriageManager.h" />
+    <ClInclude Include="Models\Department.h" />
+    <ClInclude Include="Models\Doctor.h" />
+    <ClInclude Include="Models\Appointment.h" />
+    <ClInclude Include="Models\Patient.h" />
+    <ClInclude Include="Storage\FileManager.h" />
+    <ClInclude Include="Structures\BST.h" />
+    <ClInclude Include="Structures\Graph.h" />
+    <ClInclude Include="Structures\HashTable.h" />
+    <ClInclude Include="Structures\Heap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Data\appointments.txt" />
+    <Text Include="Data\departments.txt" />
+    <Text Include="Data\doctors.txt" />
+    <Text Include="Data\patients.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(QtMsBuild)\qt.targets" Condition="Exists('$(QtMsBuild)\qt.targets')" />
