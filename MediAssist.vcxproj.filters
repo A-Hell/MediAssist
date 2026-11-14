@@ -95,6 +95,9 @@
     <ClInclude Include="Managers\TriageManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Data\appointments.txt">
@@ -109,5 +112,8 @@
     <Text Include="Data\patients.txt">
       <Filter>Resource Files\Data</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
 </Project>
