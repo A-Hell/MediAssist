@@ -14,13 +14,13 @@ class Patient
     string address;
     double height;
     double weight;
-    inline static int counter = 0;
+    inline static int counter = 1;
 
     friend class PatientManager;
 
     int generatePatientID() 
     { 
-        return ++counter; 
+        return counter++; 
     }
 
 public:
