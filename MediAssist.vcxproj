@@ -161,6 +161,7 @@
     <ClCompile Include="Structures\Queue.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Common.h" />
     <ClInclude Include="Interface\CLI.h" />
     <ClInclude Include="Interface\GUI.h" />
     <ClInclude Include="Managers\AppointmentManager.h" />
