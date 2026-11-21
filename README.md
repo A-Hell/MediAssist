@@ -158,20 +158,28 @@ A self-balancing tree structure for efficient appointment management.
 ---
 
 #### **Max Heap** (`Structures/Heap.h`)
-An array-based max heap implementation for priority-based appointment management.
+An array-based max heap implementation for priority-based appointment management with arrival number tie-breaking.
 
 **Node Structure:**
 - `appointmentID`: ID of the appointment
 - `triageScore`: Priority score based on medical urgency
+- `arrivalNumber`: Automatic counter to track appointment arrival order (breaks ties in triage scores)
 
 **Key Operations:**
-- **insert()**: Add an appointment with a triage score (O(log n))
-- **remove()**: Delete an appointment from the heap
-- **extractMax()**: Retrieve and remove the appointment with the highest triage score (returns -1 if empty)
-- **display()**: Print heap contents
-- **heapifyUp()**: Restore heap property by moving element up
-- **heapifyDown()**: Restore heap property by moving element down
+- **insert()**: Add an appointment with a triage score (O(log n)) - auto-assigns arrival number
+- **remove()**: Delete an appointment from the heap (O(n) for search, O(log n) for reheapify)
+- **search()**: Find an appointment by ID (O(n) linear search)
+- **extractMax()**: Retrieve and remove the appointment with the highest triage score (O(log n), returns -1 if empty)
+- **peek()**: View the highest priority appointment without removing it (O(1), returns -1 if empty)
+- **display()**: Print heap contents with AppointmentID, TriageScore, and ArrivalNumber
+- **heapifyUp()**: Restore heap property by moving element up after insertion
+- **heapifyDown()**: Restore heap property by moving element down after removal
 
-**Use Case:** Prioritize patient appointments based on medical urgency and triage scores, ensuring critical cases are handled first
+**Priority Comparison Logic:**
+- Primary: Higher triage score = higher priority
+- Tie-breaker: Lower arrival number = higher priority (FIFO for equal urgency)
+- Uses `hasHigherPriority()` helper function for consistent comparison across all operations
+
+**Use Case:** Prioritize patient appointments based on medical urgency and triage scores. Ensures critical cases are handled first while maintaining fair FIFO ordering for patients with equal medical priority. Particularly useful for emergency departments and urgent care scenarios.
 
 ---
