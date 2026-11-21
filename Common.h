@@ -7,6 +7,7 @@ using namespace std;
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdexcept>
 
 // Global constants and type definitions
 
