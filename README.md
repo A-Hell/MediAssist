@@ -138,22 +138,29 @@ Represents a scheduled appointment between patient and doctor.
 ### Data Structure Classes
 
 #### **Binary Search Tree (BST)** (`Structures/BST.h`)
-A self-balancing tree structure for efficient appointment management.
+A binary search tree for efficient chronological appointment management, sorted by date and time.
 
 **Node Structure:**
-- `appointmentID`: ID of the appointment
-- `date`: Appointment date
-- `time`: Appointment time
+- `appointment`: Complete Appointment object (stores full appointment data)
 - `left` and `right`: Pointers to child nodes
 
 **Key Operations:**
-- **insert()**: Add a new appointment to the tree (O(log n) average)
-- **remove()**: Delete an appointment from the tree
-- **search()**: Find an appointment by ID, date, and time; returns appointmentID if found, -1 otherwise
-- **display()**: Print tree structure
-- **displayInorder()**: Print appointments in sorted order
+- **insert()**: Add a new Appointment object to the tree (O(log n) average) - takes `const Appointment&`
+- **remove()**: Delete an appointment by ID, date, and time (O(log n) average)
+- **search(ID, date, time)**: BST search returning `Appointment*` (O(log n) average)
+- **search(ID)**: BFS search by ID alone (O(n), returns `Appointment*`)
+- **display()**: Print all appointments in chronological order using inorder traversal
+- **deleteTree()**: Clear entire tree and free memory
 
-**Use Case:** Efficient scheduling and retrieval of appointments based on date and time
+**Data Storage:**
+- Stores complete `Appointment` objects, providing access to all appointment fields (patient ID, doctor ID, status, etc.)
+- Ordered by `appointmentDate` and `appointmentTime` for efficient scheduling queries
+
+**Search Strategies:**
+1. **BST Search** (date/time based) - O(log n) average, leverages tree ordering
+2. **BFS Search** (ID based) - O(n), uses queue-based breadth-first search since ID is not the sort key
+
+**Use Case:** Efficient chronological scheduling and retrieval of appointments. Ideal for time-based queries like "find all appointments on 2024-01-15" or "get next appointment after 09:00 AM". Automatically maintains appointments in time order.
 
 ---
 
@@ -181,5 +188,85 @@ An array-based max heap implementation for priority-based appointment management
 - Uses `hasHigherPriority()` helper function for consistent comparison across all operations
 
 **Use Case:** Prioritize patient appointments based on medical urgency and triage scores. Ensures critical cases are handled first while maintaining fair FIFO ordering for patients with equal medical priority. Particularly useful for emergency departments and urgent care scenarios.
+
+---
+
+## Manager Classes
+
+Managers implement the business logic and operations for each entity in the system. They act as intermediaries between the data models and the user interface.
+
+### **AppointmentManager** (`Managers/AppointmentManager.h` / `AppointmentManager.cpp`)
+
+Handles all appointment-related operations including creation, search, updates, and status management.
+
+**Core Responsibilities:**
+- Create and validate new appointments
+- Search for appointments by ID or date/time
+- Update appointment details (date, time, assigned doctor)
+- Manage appointment lifecycle (status transitions)
+- Display appointment information
+
+**Key Data Structure:**
+- Uses `BST` (Binary Search Tree) to store appointments sorted by date and time
+- Provides dual search capabilities: efficient BST search by date/time, and BFS search by appointment ID
+
+**Key Methods:**
+
+| Method | Purpose | Return Type |
+|--------|---------|-------------|
+| `createAppointment(patientID, doctorID, date, time)` | Create new appointment with validation | `bool` |
+| `appointmentExists(appointmentID)` | Check if appointment exists | `bool` |
+| `searchAppointment(appointmentID)` | Find appointment by ID | `Appointment*` |
+| `updateAppointmentDate(appointmentID, newDate)` | Update appointment date with validation | `bool` |
+| `updateAppointmentTime(appointmentID, newTime)` | Update appointment time with validation | `bool` |
+| `updateAppointmentDoctor(appointmentID, newDoctorID)` | Reassign doctor for appointment | `bool` |
+| `setAppointmentWaiting(appointmentID)` | Mark appointment as "Waiting" | `bool` |
+| `cancelAppointment(appointmentID)` | Cancel appointment (status = "Canceled") | `bool` |
+| `completeAppointment(appointmentID)` | Mark appointment as completed | `bool` |
+| `displayAppointments()` | Display all appointments in chronological order | `void` |
+
+**Input Validation:**
+- **Date Format**: Validates against `YYYY-MM-DD` using `isValidDate()`
+- **Time Format**: Validates against `HH:MM` using `isValidTime()`
+- **IDs**: Checks for valid positive appointment/patient/doctor IDs
+
+**Appointment Status Flow:**
+```
+Scheduled → Waiting → Completed
+         ↘           ↗
+            Canceled
+```
+
+**Error Handling:**
+- Returns `false` on validation failures
+- Displays color-coded error messages (using RED/RESET formatting)
+- Returns `nullptr` when appointment not found
+
+**Example Usage:**
+```cpp
+AppointmentManager manager;
+
+// Create appointment
+bool success = manager.createAppointment(1, 5, "2024-01-15", "09:00");
+
+// Search appointment
+Appointment* apt = manager.searchAppointment(1);
+
+// Update appointment details
+manager.updateAppointmentTime(1, "10:00");
+
+// Change appointment status
+manager.setAppointmentWaiting(1);
+manager.completeAppointment(1);
+
+// Display all appointments
+manager.displayAppointments();
+```
+
+**Integration with Other Components:**
+- Works with `Appointment` model class for data representation
+- Uses `BST` for efficient appointment storage and retrieval
+- Interfaces with UI components for user interaction
+- Coordinates with `DoctorManager` and `PatientManager` for validation
 
 ---
