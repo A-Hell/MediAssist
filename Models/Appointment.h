@@ -34,32 +34,32 @@ public:
         appointmentID = generateAppointmentID();
     }
 
-    int getAppointmentID() 
+    int getAppointmentID() const
     {
         return appointmentID; 
     }
 
-    int getPatientID() 
+    int getPatientID() const
     { 
         return patientID; 
     }
 
-    int getDoctorId() 
+    int getDoctorId() const
     { 
         return doctorId; 
     }
 
-    string getAppointmentDate() 
+    string getAppointmentDate() const
     { 
         return appointmentDate; 
     }
 
-    string getAppointmentTime() 
+    string getAppointmentTime() const
     {
         return appointmentTime; 
     }
 
-    string getStatus() 
+    string getStatus() const
     {
         return status; 
     }

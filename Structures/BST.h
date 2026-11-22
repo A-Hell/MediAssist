@@ -1,82 +1,81 @@
 #pragma once
+#pragma once
 #include "Common.h"
+#include "../Models/Appointment.h"
+#include <queue>
 
-
+/*
+	Binary Search Tree for storing and managing appointments
+	Sorted by appointment date and time
+	Stores complete Appointment objects
+*/
 class BST
 {
 	struct Node
 	{
-		int appointmentID;
-		string date,time;
+		Appointment appointment;
 		Node* left;
 		Node* right;
-		Node() : appointmentID(0), date(""), time(""), left(nullptr), right(nullptr) {}
+		Node(const Appointment& app) : appointment(app), left(nullptr), right(nullptr) {}
 	};
 	Node* root;
 
-
-
 	// Private Methods
-	Node* insert(Node* node, int appointmentID, const string& date, const string& time)
+	Node* insert(Node* node, const Appointment& appointment)
 	{
-		if(!node)
+		if (!node)
 		{
-			Node* newNode = new Node();
-			newNode->appointmentID = appointmentID;
-			newNode->date = date;
-			newNode->time = time;
-			return newNode;
+			return new Node(appointment);
 		}
 
 		// Compare date and time to decide where to insert
-		if (date < node->date || (date == node->date && time < node->time))
-			node->left = insert(node->left, appointmentID, date, time);
+		if (appointment.getAppointmentDate() < node->appointment.getAppointmentDate() || 
+			(appointment.getAppointmentDate() == node->appointment.getAppointmentDate() && 
+			 appointment.getAppointmentTime() < node->appointment.getAppointmentTime()))
+			node->left = insert(node->left, appointment);
 		else
-			node->right = insert(node->right, appointmentID, date, time); // store duplicate date|time values on right
+			node->right = insert(node->right, appointment); // store duplicate date|time values on right
 
 		return node;
 	}
-
 
 	Node* remove(Node* node, int appointmentID, const string& date, const string& time)
 	{
 		if (!node)
 			return nullptr;
 
-		// Compare date and time to decide where to insert
-		if (node->appointmentID == appointmentID && node->date == date && node->time == time)
+		// Compare date and time to find the node
+		if (node->appointment.getAppointmentID() == appointmentID && 
+			node->appointment.getAppointmentDate() == date && 
+			node->appointment.getAppointmentTime() == time)
 		{
 			// Node to be deleted found
-			Node* q;
-			// Deletion case
 			if (node->left == nullptr)
 			{
-				q = node->right;
+				Node* temp = node->right;
 				delete node;
-				node = q;
+				return temp;
 			}
 			else if (node->right == nullptr)
 			{
-				q = node->left;
+				Node* temp = node->left;
 				delete node;
-				node = q;
+				return temp;
 			}
-			// Case: 2 Children
+			// Case: 2 Children - replace with inorder successor
 			else
 			{
-				// replace with inorder successor
-				q = node->right;
-				while (q->left)
-					q = q->left;
+				Node* minNode = node->right;
+				while (minNode->left)
+					minNode = minNode->left;
 
-				node->appointmentID = q->appointmentID;
-				node->date = q->date;
-				node->time = q->time;
-
-				node->right = remove(node->right, q->appointmentID, q->date, q->time);
+				node->appointment = minNode->appointment;
+				node->right = remove(node->right, minNode->appointment.getAppointmentID(), 
+					minNode->appointment.getAppointmentDate(), minNode->appointment.getAppointmentTime());
 			}
 		}
-		else if (date < node->date || (date == node->date && time < node->time))
+		else if (date < node->appointment.getAppointmentDate() || 
+				(date == node->appointment.getAppointmentDate() && time < node->appointment.getAppointmentTime()))
 			node->left = remove(node->left, appointmentID, date, time);
 		else
 			node->right = remove(node->right, appointmentID, date, time);
@@ -84,27 +83,28 @@ class BST
 		return node;
 	}
 
-
-	Node* search(Node* node, int appointmentID, const string& date, const string& time)
+	Node* search(Node* node, int appointmentID, const string& date, const string& time) const
 	{
 		if (!node)
 			return nullptr;
 
-		if (node->appointmentID == appointmentID && node->date == date && node->time == time)
+		if (node->appointment.getAppointmentID() == appointmentID && 
+			node->appointment.getAppointmentDate() == date && 
+			node->appointment.getAppointmentTime() == time)
 			return node;
-		else if (date < node->date || (date == node->date && time < node->time))
+		else if (date < node->appointment.getAppointmentDate() || 
+				(date == node->appointment.getAppointmentDate() && time < node->appointment.getAppointmentTime()))
 			return search(node->left, appointmentID, date, time);
 		else
 			return search(node->right, appointmentID, date, time);
 	}
 
-
-	void inorderTraversal(Node* node)
+	void inorderTraversal(Node* node) const
 	{
 		if (!node)
 			return;
 		inorderTraversal(node->left);
-		cout << "Appointment ID: " << node->appointmentID << ", Date: " << node->date << ", Time: " << node->time << endl;
+		cout << node->appointment << endl;
 		inorderTraversal(node->right);
 	}
 
@@ -119,35 +119,66 @@ class BST
 		return nullptr;
 	}
 
+
+
 public:
 	// Public Interfaces
 	BST() : root(nullptr) {}
 
-	// Insert an appointment based on appointmentID, date, and time
-	void insert(int appointmentID, const string& date, const string& time)
+	// Insert an appointment into the BST
+	void insert(const Appointment& appointment)
 	{
-		if (appointmentID <= 0 || date.empty() || time.empty())
+		if (appointment.getAppointmentID() <= 0 || appointment.getAppointmentDate().empty() || appointment.getAppointmentTime().empty())
 			throw invalid_argument("Invalid appointment data");
-		root = insert(root, appointmentID, date, time);
+		root = insert(root, appointment);
 	}
 
 	// Remove an appointment based on appointmentID, date, and time
 	void remove(int appointmentID, const string& date, const string& time)
-	{ root = remove(root, appointmentID, date, time); }
-
-	// Search for an appointment based on appointmentID, date and time, returns appointmentID if found, else returns -1
-	int search(int appointmentID, const string& date, const string& time)
-	{
-		Node* res = search(root, appointmentID, date, time);
-		if(res)
-			return res->appointmentID;
-		return -1;
+	{ 
+		root = remove(root, appointmentID, date, time); 
 	}
 
-	// Display all appointments in order
-	void display()
+	// Search for an appointment, returns pointer to Appointment object if found, nullptr otherwise
+	Appointment* search(int appointmentID, const string& date, const string& time)
 	{
-		cout << "Appointments in order:" << endl;
+		Node* res = search(root, appointmentID, date, time);
+		if (res)
+			return &(res->appointment);
+		return nullptr;
+	}
+
+	// BFS Search for appointment by ID only
+	Appointment* search(int appointmentID)
+	{
+		if (!root)
+			return nullptr;
+
+		queue<Node*> q;
+		q.push(root);
+
+		while (!q.empty())
+		{
+			Node* cur = q.front();
+			q.pop();
+
+			if (cur->appointment.getAppointmentID() == appointmentID)
+				return &(cur->appointment);
+
+			if (cur->left)
+				q.push(cur->left);
+
+			if (cur->right)
+				q.push(cur->right);
+		}
+
+		return nullptr;
+	}
+
+	// Display all appointments in chronological order
+	void display() const
+	{
+		cout << "Appointments in chronological order:" << endl;
 		if (!root)
 			cout << "No appointments found." << endl;
 		else 
@@ -162,5 +193,8 @@ public:
 	}
 
 	// Free memory allocated for the BST
-	~BST(){ root = postOrderDelete(root);}
+	~BST() 
+	{ 
+		root = postOrderDelete(root);
+	}
 };
