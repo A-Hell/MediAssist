@@ -31,6 +31,9 @@
     <Filter Include="Resource Files\Data">
       <UniqueIdentifier>{c1c5c0d1-16a9-42cc-9ff2-2455b6d60b06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{bd220d3c-529a-4165-b2fd-c28105f81066}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,6 +44,24 @@
     </ClCompile>
     <ClCompile Include="Storage\FileManager.cpp">
       <Filter>Header Files\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\HospitalSystem.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\DoctorManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\DepartmentManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\AppointmentManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\TriageManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\PatientManager.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
