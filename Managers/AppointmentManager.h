@@ -8,6 +8,8 @@ class AppointmentManager
     BST appointmentTree;
 
     // Private helper functions
+ 
+    // Check if an appointment with the given ID exists in the BST
     bool appointmentExists(int appointmentID);
 
 public:
@@ -15,7 +17,7 @@ public:
     // Appointment operations
     bool createAppointment(int patientID, int doctorId, const string& appointmentDate, const string& appointmentTime);
 
-    bool searchAppointment(int appointmentID);
+    Appointment* searchAppointment(int appointmentID);
 
     bool updateAppointmentDate(int appointmentID, const string& newDate);
 
@@ -29,7 +31,5 @@ public:
 
     bool completeAppointment(int appointmentID);
 
-    void displayAppointments();
-
-    void displayAppointmentsInOrder();
+    void displayAppointments(); 
 };
