@@ -1,0 +1,35 @@
+#pragma once
+#include "Common.h"
+#include "../models/Appointment.h"
+#include "../structures/BST.h"
+
+class AppointmentManager
+{
+    BST appointmentTree;
+
+    // Private helper functions
+    bool appointmentExists(int appointmentID);
+
+public:
+
+    // Appointment operations
+    bool createAppointment(int patientID, int doctorId, const string& appointmentDate, const string& appointmentTime);
+
+    bool searchAppointment(int appointmentID);
+
+    bool updateAppointmentDate(int appointmentID, const string& newDate);
+
+	bool updateAppointmentTime(int appointmentID, const string& newTime);
+
+	bool updateAppointmentDoctor (int appointmentID, int newDoctorId);
+
+    bool setAppointmentWaiting(int appointmentID);
+
+    bool cancelAppointment(int appointmentID);
+
+    bool completeAppointment(int appointmentID);
+
+    void displayAppointments();
+
+    void displayAppointmentsInOrder();
+};
