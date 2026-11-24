@@ -6,17 +6,18 @@
 bool AppointmentManager::appointmentExists(int appointmentID) 
 { return appointmentTree.search(appointmentID) != nullptr; }
 
-bool AppointmentManager::createAppointment(int patientID, int doctorId, const string& appointmentDate, const string& appointmentTime) 
+int AppointmentManager::createAppointment(int patientID, int doctorId, const string& appointmentDate, const string& appointmentTime) 
 {
 	if (!isValidDate(appointmentDate)) 
 	{
 		cout << RED << "Error: Invalid date format. Please use YYYY-MM-DD." << RESET << endl;
-		return false;
+		return -1;
 	}
 
 	if (!isValidTime(appointmentTime)) 
 	{
 		cout << RED << "Error: Invalid time format. Please use HH:MM." << RESET << endl;
+		return -1;
 		return false;
 	}
 
@@ -26,7 +27,7 @@ bool AppointmentManager::createAppointment(int patientID, int doctorId, const st
 	// Insert the new appointment into the BST
 	appointmentTree.insert(newAppointment);
 
-	return true;
+	return newAppointment.getAppointmentID();
 }
 
 Appointment* AppointmentManager::searchAppointment(int appointmentID) 

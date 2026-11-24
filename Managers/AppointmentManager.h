@@ -15,7 +15,7 @@ class AppointmentManager
 public:
 
     // Appointment operations
-    bool createAppointment(int patientID, int doctorId, const string& appointmentDate, const string& appointmentTime);
+    int createAppointment(int patientID, int doctorId, const string& appointmentDate, const string& appointmentTime);
 
     Appointment* searchAppointment(int appointmentID);
 
