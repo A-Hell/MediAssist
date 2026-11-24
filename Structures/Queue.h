@@ -6,15 +6,17 @@
 class Queue
 {
 private:
-    // Each Node stores an Appointment ID and points to the next Node.
+    // Each node represents one appointment in the waiting queue.
     struct Node
     {
         int appointmentID;
+        int triageScore;
         Node* next;
 
-        Node(int id)
+        Node(int id, int score)
         {
             appointmentID = id;
+            triageScore = score;
             next = NULL;
         }
     };
@@ -22,7 +24,7 @@ private:
     Node* frontNode;
     Node* rearNode;
 
-    // Keeps track of the number of waiting appointments.
+    // Keeps count of how many appointments are currently waiting.
     int size;
 
 public:
@@ -33,16 +35,17 @@ public:
         size = 0;
     }
 
-    void enqueue(int appointmentID)
+    // Adds a new appointment at the end of the queue.
+    void enqueue(int appointmentID, int triageScore)
     {
-        // Appointment IDs must be positive.
-        if (appointmentID <= 0)
+        if (appointmentID <= 0 || triageScore < 0)
         {
             return;
         }
 
-        Node* newNode = new Node(appointmentID);
+        Node* newNode = new Node(appointmentID, triageScore);
 
+        // If the queue is empty, the new node becomes both front and rear.
         if (frontNode == NULL)
         {
             frontNode = newNode;
@@ -50,15 +53,15 @@ public:
         }
         else
         {
-            // Connect the current rear Node to the new Node.
+            // Otherwise, connect it after the current last node.
             rearNode->next = newNode;
-            // The new Node is now the last Node.
             rearNode = newNode;
         }
-        // One more appointment has entered the Queue.
+
         size++;
     }
 
+    // Removes and returns the appointment at the front of the queue.
     int dequeue()
     {
         if (frontNode == NULL)
@@ -66,29 +69,24 @@ public:
             return -1;
         }
 
-        // Save the first Node so we can delete it.
         Node* temp = frontNode;
-
-        // Store its Appointment ID before deleting the Node.
         int appointmentID = temp->appointmentID;
 
-        // Move the front pointer to the next Node.
         frontNode = frontNode->next;
 
+        // If that was the only appointment, the queue is now empty.
         if (frontNode == NULL)
         {
             rearNode = NULL;
         }
 
-        // Free the memory occupied by the removed Node.
         delete temp;
-        // One appointment has left the Queue.
         size--;
 
         return appointmentID;
     }
 
-    // Returns the Appointment ID at the front without removing it.
+    // Returns the first appointment without removing it.
     int front() const
     {
         if (frontNode == NULL)
@@ -99,21 +97,25 @@ public:
         return frontNode->appointmentID;
     }
 
+    // Checks whether there are any appointments waiting.
     bool isEmpty() const
     {
         return frontNode == NULL;
     }
 
+    // Returns the current number of waiting appointments.
     int getSize() const
     {
         return size;
     }
 
+    // Displays all appointments currently stored in the queue.
     void display() const
     {
         cout << BOLD << "\n WAITING QUEUE " << RESET << endl;
 
         Node* current = frontNode;
+
         if (current == NULL)
         {
             cout << "Queue is empty." << endl;
@@ -124,7 +126,8 @@ public:
 
             while (current != NULL)
             {
-                cout << current->appointmentID;
+                cout << "(" << current->appointmentID << ", " << current->triageScore << ")";
+
                 current = current->next;
 
                 if (current != NULL)
@@ -132,11 +135,77 @@ public:
                     cout << " -> ";
                 }
             }
+
             cout << " -> NULL" << endl;
         }
+
         cout << "Total Waiting Appointments: " << size << endl;
     }
 
+    // Updates the triage score of an appointment already in the queue.
+    bool updateTriageScore(int appointmentID, int newScore)
+    {
+        if (newScore < 0)
+        {
+            return false;
+        }
+
+        Node* current = frontNode;
+
+        while (current != NULL)
+        {
+            if (current->appointmentID == appointmentID)
+            {
+                current->triageScore = newScore;
+                return true;
+            }
+
+            current = current->next;
+        }
+
+        return false;
+    }
+
+    // Removes a specific appointment from the queue.
+    bool remove(int appointmentID, int& triageScore)
+    {
+        Node* current = frontNode;
+        Node* previous = NULL;
+
+        while (current != NULL)
+        {
+            if (current->appointmentID == appointmentID)
+            {
+                triageScore = current->triageScore;
+
+                if (previous == NULL)
+                {
+                    frontNode = current->next;
+                }
+                else
+                {
+                    previous->next = current->next;
+                }
+
+                if (current == rearNode)
+                {
+                    rearNode = previous;
+                }
+
+                delete current;
+                size--;
+
+                return true;
+            }
+
+            previous = current;
+            current = current->next;
+        }
+
+        return false;
+    }
+
+    // Deletes all remaining nodes when the queue object is destroyed.
     ~Queue()
     {
         while (frontNode != NULL)

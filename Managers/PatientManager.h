@@ -1,3 +1,4 @@
+
 #ifndef PATIENTMANAGER_H
 #define PATIENTMANAGER_H
 
@@ -12,68 +13,24 @@ private:
 
 public:
     // Creates the PatientManager with an empty Hash Table.
-    PatientManager(int capacity = 10) : patientTable(capacity) {}
+    PatientManager(int capacity = 10);
 
-    int registerPatient(string name, int age, string gender, string phone, string address, double height, double weight)
-    {
-        Patient patient(name, age, gender, phone, address, height, weight);
-
-        // Save the automatically generated ID.
-        int patientID = patient.getPatientID();
-
-        // Store the patient in the Hash Table.
-        if (patientTable.insert(patient))
-        {
-            return patientID;
-        }
-
-        return -1;
-    }
+    int registerPatient(string name, int age, string gender, string phone, string address, double height, double weight);
 
     // Finds a patient using their ID.
-    Patient* searchPatient(int patientID)
-    {
-        return patientTable.search(patientID);
-    }
+    Patient* searchPatient(int patientID);
 
-    // Updates the information of an existing patient.
-    bool updatePatient(int patientID, string name, int age, string gender, string phone, string address, double height, double weight)
-    {
-        // Find the existing patient first.
-        Patient* patient = patientTable.search(patientID);
+    // Updates individual patient details.
+    bool updateName(int patientID, string name);
+    bool updateAge(int patientID, int age);
+    bool updateGender(int patientID, string gender);
+    bool updatePhone(int patientID, string phone);
+    bool updateAddress(int patientID, string address);
+    bool updateHeight(int patientID, double height);
+    bool updateWeight(int patientID, double weight);
 
-        // We cannot update a patient who doesn't exist.
-        if (patient == NULL)
-        {
-            return false;
-        }
-
-        // Make a copy so we can update the information without generating a new Patient ID.
-        Patient updatedPatient = *patient;
-
-        // PatientManager is a friend of Patient so it can access these private attributes directly.
-        updatedPatient.name = name;
-        updatedPatient.age = age;
-        updatedPatient.gender = gender;
-        updatedPatient.phone = phone;
-        updatedPatient.address = address;
-        updatedPatient.height = height;
-        updatedPatient.weight = weight;
-
-        return patientTable.update(patientID, updatedPatient);
-    }
-
-    // Removes a patient using their ID.
-    bool removePatient(int patientID)
-    {
-        return patientTable.remove(patientID);
-    }
-
-    // Displays all registered patients.
-    void displayPatients()
-    {
-        patientTable.display();
-    }
+    bool removePatient(int patientID);
+    void displayPatients();
 };
 
 #endif
