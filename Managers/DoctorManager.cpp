@@ -31,7 +31,7 @@ bool DoctorManager::doctorExists(int doctorId) const
 	return false;
 }
 
-Doctor* DoctorManager::searchDoctor(int doctorId) const
+Doctor* DoctorManager::searchDoctor(int doctorId)
 {
 	int size = doctors.size();
 	for (int i = 0; i < size; ++i) 

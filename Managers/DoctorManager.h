@@ -12,7 +12,7 @@ public:
 	int registerDoctor(int departmentId, const string& name, const string& phone, const string& specialization, bool availability = true);
 	bool removeDoctor(int doctorId); 
 	bool doctorExists(int doctorId) const;
-	Doctor* searchDoctor(int doctorId) const;
+	Doctor* searchDoctor(int doctorId);
 
 
 	// Update functions for doctor attributes

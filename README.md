@@ -237,6 +237,55 @@ Handles doctor registration, removal, searching, attribute updates, and displayi
 
 ---
 
+### **DepartmentManager** (`Managers/DepartmentManager.h` / `DepartmentManager.cpp`)
+
+Handles department creation, removal, searching, updates, doctor membership, and department-related display operations.
+
+**Core Responsibilities:**
+- Create departments and assign automatically generated department IDs.
+- Remove departments by ID.
+- Search for departments and check whether a department exists.
+- Update department names, descriptions, and locations.
+- Add doctors to departments and remove doctors from departments.
+- Find which department a doctor belongs to.
+- Check whether a specific doctor is assigned to a department.
+- Display all departments or the doctor IDs assigned to a department.
+
+**Key Data Structure:**
+- Uses `vector<Department>` to store Department objects.
+- Searches the vector linearly using department IDs.
+- Each `Department` stores the IDs of its associated doctors in a `vector<int>`.
+
+**Key Methods:**
+
+| Method | Purpose | Return Type |
+|--------|---------|-------------|
+| `createDepartment(name, description, location)` | Create a department and return its generated ID | `int` |
+| `removeDepartment(departmentID)` | Remove a department by ID | `bool` |
+| `departmentExists(departmentID)` | Check whether a department exists | `bool` |
+| `searchDepartment(departmentID)` | Find a department by ID | `Department*` |
+| `updateDepartmentName(departmentID, newName)` | Update the department name | `bool` |
+| `updateDepartmentDescription(departmentID, newDescription)` | Update the department description | `bool` |
+| `updateDepartmentLocation(departmentID, newLocation)` | Update the department location | `bool` |
+| `findDoctorsDepartment(doctorID)` | Find the department ID containing the specified doctor; returns `-1` if not found | `int` |
+| `isDoctorFromDepartment(departmentID, doctorID)` | Check whether a doctor belongs to a specific department | `bool` |
+| `addDoctorToDepartment(departmentID, doctorID)` | Add a doctor ID to a department | `bool` |
+| `removeDoctorFromDepartment(departmentID, doctorID)` | Remove a doctor ID from a department | `bool` |
+| `displayDepartments()` | Display all registered departments | `void` |
+| `displayDepartmentDoctors(departmentID)` | Display the doctor IDs assigned to a department | `void` |
+
+**Integration with Other Components:**
+- Works with the `Department` model class to store department information and associated doctor IDs.
+- Coordinates with `DoctorManager` to maintain consistent doctor-department relationships.
+- Can be used by `HospitalSystem` when registering doctors, changing department assignments, or removing doctors.
+- Does not implement the department network or referral Graph; that functionality can be added separately when the Graph structure is implemented.
+
+**Implementation Notes:**
+- `searchDepartment()` returns a pointer to an element stored in the vector. This pointer may become invalid if a later vector operation reallocates its storage. Avoid retaining the pointer across operations that may modify the vector.
+- A department should not be removed while doctors are still assigned to it, unless those doctors are first reassigned or unassigned.
+- Doctor membership should remain consistent on both sides: a doctor's `departmentId` and the department's `doctorIds` list should agree.
+
+
 ### **AppointmentManager** (`Managers/AppointmentManager.h` / `AppointmentManager.cpp`)
 
 Handles all appointment-related operations including creation, search, updates, and status management.

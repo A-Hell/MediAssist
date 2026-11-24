@@ -19,7 +19,15 @@ class Department
 	void setLocation(string location) { this->location = location; }
 
 	// Functions to manage doctor IDs
-	void addDoctorId(int doctorId) { if (!isInDepartment(doctorId)) doctorIds.push_back(doctorId); }
+	bool addDoctorId(int doctorId) 
+	{ 
+		if (!isInDepartment(doctorId))
+		{
+			doctorIds.push_back(doctorId);
+			return true;
+		}
+		return false;
+	}
 	bool removeDoctorId(int doctorId)
 	{
 		int size = doctorIds.size();
