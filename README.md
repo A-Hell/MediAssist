@@ -195,6 +195,48 @@ An array-based max heap implementation for priority-based appointment management
 
 Managers implement the business logic and operations for each entity in the system. They act as intermediaries between the data models and the user interface.
 
+### **DoctorManager** (`Managers/DoctorManager.h` / `DoctorManager.cpp`)
+
+Handles doctor registration, removal, searching, attribute updates, and displaying doctor records.
+
+**Core Responsibilities:**
+- Register doctors and assign them a department ID
+- Remove doctors by ID
+- Search for doctors and check whether a doctor exists
+- Update a doctor's department, name, phone number, specialization, and availability
+- Display all doctors, available doctors, or doctors belonging to a specific department
+
+**Key Data Structure:**
+- Uses `vector<Doctor>` to store Doctor objects
+- Searches the vector linearly by doctor ID
+
+**Key Methods:**
+
+| Method | Purpose | Return Type |
+|--------|---------|-------------|
+| `registerDoctor(departmentId, name, phone, specialization, availability)` | Register a doctor and return the generated doctor ID | `int` |
+| `removeDoctor(doctorId)` | Remove a doctor by ID | `bool` |
+| `doctorExists(doctorId)` | Check whether a doctor is registered | `bool` |
+| `searchDoctor(doctorId)` | Find a doctor by ID | `Doctor*` |
+| `updateDoctorDepartment(doctorId, newDepartmentId)` | Change the doctor's department ID | `bool` |
+| `updateDoctorName(doctorId, newName)` | Update the doctor's name | `bool` |
+| `updateDoctorPhone(doctorId, newPhone)` | Update the doctor's phone number | `bool` |
+| `updateDoctorSpecialization(doctorId, newSpecialization)` | Update the doctor's specialization | `bool` |
+| `updateDoctorAvailability(doctorId, newAvailability)` | Change the doctor's availability | `bool` |
+| `displayDoctors()` | Display all registered doctors | `void` |
+| `displayAvailableDoctors()` | Display only available doctors | `void` |
+| `displayDoctorsByDepartment(departmentID)` | Display doctors assigned to a department | `void` |
+
+**Integration with Other Components:**
+- Works with the `Doctor` model class for doctor data
+- Coordinates with `DepartmentManager` to keep doctor-department relationships consistent
+- Can be used by `AppointmentManager` and `HospitalSystem` when validating or assigning doctors
+
+**Implementation Note:**
+- `searchDoctor()` returns a pointer to an element stored in the vector. Such a pointer may become invalid if a later vector operation reallocates its storage. Retrieve the pointer when needed and avoid retaining it across operations that may modify the vector.
+
+---
+
 ### **AppointmentManager** (`Managers/AppointmentManager.h` / `AppointmentManager.cpp`)
 
 Handles all appointment-related operations including creation, search, updates, and status management.

@@ -19,6 +19,7 @@ class Doctor
 	void setDoctorId(int doctorId) { this->doctorId = doctorId; }
 	void setAvailability(bool availability) { this->availability = availability; }
 	void setDepartmentId(int departmentId) { this->departmentId = departmentId; }
+	void setSpecialization(string specialization) { this->specialization = specialization; }
 	void setName(string name) { this->name = name; }
 	void setPhone(string phone) { this->phone = phone; }
 
