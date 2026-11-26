@@ -103,6 +103,24 @@ public:
         return frontNode == NULL;
     }
 
+    // Checks whether an appointment is already in the queue.
+    bool contains(int appointmentID) const
+    {
+        Node* current = frontNode;
+
+        while (current != NULL)
+        {
+            if (current->appointmentID == appointmentID)
+            {
+                return true;
+            }
+
+            current = current->next;
+        }
+
+        return false;
+    }
+
     // Returns the current number of waiting appointments.
     int getSize() const
     {

@@ -2,7 +2,7 @@
 #ifndef SYMPTOMS_H
 #define SYMPTOMS_H
 
-#include "common.h"
+#include "Common.h"
 #include <vector>
 #include <string>
 
@@ -65,5 +65,8 @@ Priority determinePriority(int triageScore);
 
 // Returns general symptoms and symptoms of the selected department.
 vector<Symptom> getAvailableSymptoms(const string& departmentName);
+
+// Checks whether the selected symptoms belong to the chosen department.
+bool areSymptomsValid(const string& departmentName, const vector<Symptom>& selectedSymptoms);
 
 #endif

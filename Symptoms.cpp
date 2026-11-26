@@ -187,3 +187,49 @@ vector<Symptom> getAvailableSymptoms(const string& departmentName)
 
     return symptoms;
 }
+
+// Checks whether the patient selected valid symptoms for their department.
+bool areSymptomsValid(const string& departmentName, const vector<Symptom>& selectedSymptoms)
+{
+    // Get the symptoms available for this department.
+    vector<Symptom> availableSymptoms = getAvailableSymptoms(departmentName);
+
+    // A department must exist and the patient must select at least one symptom.
+    if (availableSymptoms.empty() || selectedSymptoms.empty())
+    {
+        return false;
+    }
+
+    // Check each selected symptom.
+    for (int i = 0; i < selectedSymptoms.size(); i++)
+    {
+        bool found = false;
+
+        // Check whether the selected symptom is allowed in this department.
+        for (int j = 0; j < availableSymptoms.size(); j++)
+        {
+            if (selectedSymptoms[i] == availableSymptoms[j])
+            {
+                found = true;
+                break;
+            }
+        }
+
+        // Reject the selection if the symptom is not allowed.
+        if (found == false)
+        {
+            return false;
+        }
+
+        // Make sure the patient has not selected the same symptom twice.
+        for (int j = 0; j < i; j++)
+        {
+            if (selectedSymptoms[i] == selectedSymptoms[j])
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
