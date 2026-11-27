@@ -20,15 +20,14 @@ public:
     Appointment* searchAppointment(int appointmentID);
 
     bool updateAppointmentDate(int appointmentID, const string& newDate);
-
 	bool updateAppointmentTime(int appointmentID, const string& newTime);
-
 	bool updateAppointmentDepartment (int appointmentID, int newDepartmentID);
 
+	bool addSymtomToAppointment(int appointmentID, Symptom symptom);
+    bool removeSymptomFromAppointment(int appointmentID, Symptom symptom);
+
     bool setAppointmentWaiting(int appointmentID);
-
     bool cancelAppointment(int appointmentID);
-
     bool completeAppointment(int appointmentID);
 
     void displayAppointments(); 

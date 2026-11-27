@@ -111,6 +111,46 @@ bool AppointmentManager::updateAppointmentDepartment(int appointmentID, int newD
 	}
 }
 
+bool AppointmentManager::addSymtomToAppointment(int appointmentID, Symptom symptom)
+{
+	Appointment* appointment = appointmentTree.search(appointmentID);
+	if (appointment)
+	{
+		if (appointment->addSymptom(symptom))
+			return true;
+		else
+		{
+			cout << RED << "Error: Symptom already exists for this appointment." << RESET << endl;
+			return false;
+		}
+	}
+	else
+	{
+		cout << RED << "Error: Appointment with ID " << appointmentID << " not found." << RESET << endl;
+		return false;
+	}
+}
+
+bool AppointmentManager::removeSymptomFromAppointment(int appointmentID, Symptom symptom)
+{
+	Appointment* appointment = appointmentTree.search(appointmentID);
+	if (appointment)
+	{
+		if (appointment->removeSymptom(symptom))
+			return true;
+		else
+		{
+			cout << RED << "Error: Symptom not found for this appointment." << RESET << endl;
+			return false;
+		}
+	}
+	else
+	{
+		cout << RED << "Error: Appointment with ID " << appointmentID << " not found." << RESET << endl;
+		return false;
+	}
+}
+
 bool AppointmentManager::setAppointmentWaiting(int appointmentID)
 {
 	Appointment* appointment = appointmentTree.search(appointmentID);

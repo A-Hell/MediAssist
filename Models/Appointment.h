@@ -25,15 +25,14 @@ class Appointment
     }
 
 public:
-
+	// Constructors
     Appointment() : appointmentID(0), patientID(0), departmentID(0), appointmentDate("N/A"), appointmentTime("N/A"), status("Scheduled")
-    {
-        appointmentID = generateAppointmentID();
-    }
+    { appointmentID = generateAppointmentID(); }
 
     Appointment(int patientID, int departmentID, const vector<Symptom> symptoms, string appointmentDate, string appointmentTime, string status = "Scheduled") : appointmentID(0), patientID(patientID), departmentID(departmentID), symptoms(symptoms), appointmentDate(appointmentDate), appointmentTime(appointmentTime), status(status)
     { appointmentID = generateAppointmentID(); }
 
+    // Public Getters
     string getStatus() const { return status; }
     int getPatientID() const { return patientID; }
     int getDepartmentID() const { return departmentID; }
@@ -41,6 +40,32 @@ public:
     string getAppointmentDate() const { return appointmentDate; }
     string getAppointmentTime() const { return appointmentTime; }
     const vector<Symptom>& getSymptoms() const { return symptoms; }
+
+    bool addSymptom(Symptom symptom)
+    {
+		size_t size = symptoms.size();
+        for (size_t i = 0; i < size; ++i)
+        {
+            if (symptoms[i] == symptom)
+                return false;
+		}
+        symptoms.push_back(symptom);
+		return true;
+    }
+
+    bool removeSymptom(Symptom symptom)
+    {
+		size_t size = symptoms.size();
+        for (size_t i = 0; i < size; ++i)
+        {
+            if (symptoms[i] == symptom)
+            {
+                symptoms.erase(symptoms.begin() + i);
+                return true;
+            }
+        }
+		return false;
+    }
 
     friend ostream& operator<<(ostream& out, const Appointment& appointment)
     {
@@ -51,7 +76,7 @@ public:
         out << BOLD + "Time: " + RESET << appointment.appointmentTime << endl;
 		out << BOLD + "Symptoms: " + RESET;
 		size_t symptomCount = appointment.symptoms.size();
-        for(int i = 0; i < symptomCount; ++i)
+        for(size_t i = 0; i < symptomCount; ++i)
         {
             out << symptomToString(appointment.symptoms[i]);
             if (i < symptomCount - 1)

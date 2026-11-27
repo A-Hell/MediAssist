@@ -58,12 +58,12 @@ bool TriageManager::areSymptomsAllowed(const string& departmentName,
     }
 
     // Check every selected symptom.
-    for (int i = 0; i < symptoms.size(); i++)
+    for (size_t i = 0; i < symptoms.size(); i++)
     {
         bool found = false;
 
         // Check whether the symptom is available in this department.
-        for (int j = 0; j < availableSymptoms.size(); j++)
+        for (size_t j = 0; j < availableSymptoms.size(); j++)
         {
             if (symptoms[i] == availableSymptoms[j])
             {

@@ -47,7 +47,7 @@ public:
     bool patientExists(int patientID);
     bool removePatient(int patientID);
 
-	void displayAllPatients();
+    void displayAllPatients();
 
     // ---------------- DEPARTMENT OPERATIONS ----------------
 
@@ -69,8 +69,20 @@ public:
 
     const Appointment* findAppointment(int appointmentID);
 
+    // Appointment update operations
+    bool updateAppointmentDate(int appointmentID, const string& newDate);
+    bool updateAppointmentTime(int appointmentID, const string& newTime);
+    bool updateAppointmentDepartment(int appointmentID, int newDepartmentID);
+
+    bool addSymptomToAppointment(int appointmentID, Symptom symptom);
+    bool removeSymptomFromAppointment(int appointmentID, Symptom symptom);
+
+    // Appointment status management
     bool cancelAppointment(int appointmentID);
     bool completeAppointment(int appointmentID);
+    bool setAppointmentWaiting(int appointmentID);
+
+    void displayAllAppointments();
 
     // ---------------- TRIAGE OPERATIONS ----------------
 

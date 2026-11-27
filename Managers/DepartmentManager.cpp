@@ -9,9 +9,9 @@ int DepartmentManager::createDepartment(const string& name, const string& descri
 
 bool DepartmentManager::removeDepartment(int departmentID)
 {
-	int size = departments.size();
+	size_t size = departments.size();
 
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		if (departments[i].getDepartmentId() == departmentID)
 		{
@@ -31,9 +31,9 @@ bool DepartmentManager::departmentExists(int departmentID)
 
 Department* DepartmentManager::searchDepartment(int departmentID)
 {
-	int size = departments.size();
+	size_t size = departments.size();
 
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 		if (departments[i].getDepartmentId() == departmentID)
 			return &departments[i];
 
@@ -78,8 +78,8 @@ bool DepartmentManager::updateDepartmentLocation(int departmentID, const string&
 // Doctor Functions
 int DepartmentManager::findDoctorsDepartment(int doctorID)
 {
-	int size = departments.size();
-	for (int i = 0; i < size; ++i)
+	size_t size = departments.size();
+	for (size_t i = 0; i < size; ++i)
 	{
 		if (departments[i].isInDepartment(doctorID))
 			return departments[i].getDepartmentId();
@@ -120,9 +120,9 @@ void DepartmentManager::displayDepartments()
 		return;
 	}
 
-	int size = departments.size();
+	size_t size = departments.size();
 
-	for (int i = 0; i < size; ++i)
+	for (size_t i = 0; i < size; ++i)
 		cout << departments[i] << endl;
 }
 

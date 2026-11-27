@@ -30,8 +30,8 @@ class Department
 	}
 	bool removeDoctorId(int doctorId)
 	{
-		int size = doctorIds.size();
-		for (int i = 0; i < size; i++)
+		size_t size = doctorIds.size();
+		for (size_t i = 0; i < size; i++)
 		{
 			if (doctorIds[i] == doctorId)
 			{
@@ -58,8 +58,8 @@ public:
 
 	bool isInDepartment(int doctorId) const // Check if a doctor ID is in the department
 	{
-		int size = doctorIds.size();
-		for (int i = 0; i < size; i++)
+		size_t size = doctorIds.size();
+		for (size_t i = 0; i < size; i++)
 		{
 			if (doctorIds[i] == doctorId)
 				return true;

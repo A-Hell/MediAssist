@@ -54,24 +54,48 @@ bool HospitalSystem::patientExists(int patientID)
 
 // ---------------- APPOINTMENT OPERATIONS ----------------
 
-int HospitalSystem::createAppointment(int patientID,int departmentID,const vector<Symptom>& symptoms,const string& date,const string& time)
-{
-	return appointmentManager.createAppointment(patientID, departmentID, symptoms, date, time);
+int HospitalSystem::createAppointment(int patientID, int departmentID, const vector<Symptom>& symptoms, const string& date, const string& time){
+    return appointmentManager.createAppointment(patientID, departmentID, symptoms, date, time);
 }
 
-const Appointment* HospitalSystem::findAppointment(int appointmentID)
-{
-	return appointmentManager.searchAppointment(appointmentID);
+const Appointment* HospitalSystem::findAppointment(int appointmentID){
+    return appointmentManager.searchAppointment(appointmentID);
 }
 
-bool HospitalSystem::cancelAppointment(int appointmentID)
-{
-	return appointmentManager.cancelAppointment(appointmentID);
+bool HospitalSystem::updateAppointmentDate(int appointmentID, const string& newDate) {
+    return appointmentManager.updateAppointmentDate(appointmentID, newDate);
 }
 
-bool HospitalSystem::completeAppointment(int appointmentID)
-{
-	return appointmentManager.completeAppointment(appointmentID);
+bool HospitalSystem::updateAppointmentTime(int appointmentID, const string& newTime) {
+    return appointmentManager.updateAppointmentTime(appointmentID, newTime);
+}
+
+bool HospitalSystem::updateAppointmentDepartment(int appointmentID, int newDepartmentID) {
+    return appointmentManager.updateAppointmentDepartment(appointmentID, newDepartmentID);
+}
+
+bool HospitalSystem::cancelAppointment(int appointmentID) {
+    return appointmentManager.cancelAppointment(appointmentID);
+}
+
+bool HospitalSystem::completeAppointment(int appointmentID) {
+    return appointmentManager.completeAppointment(appointmentID);
+}
+
+bool HospitalSystem::setAppointmentWaiting(int appointmentID) {
+    return appointmentManager.setAppointmentWaiting(appointmentID);
+}
+
+bool HospitalSystem::addSymptomToAppointment(int appointmentID, Symptom symptom) {
+    return appointmentManager.addSymtomToAppointment(appointmentID, symptom);
+}
+
+bool HospitalSystem::removeSymptomFromAppointment(int appointmentID, Symptom symptom) {
+    return appointmentManager.removeSymptomFromAppointment(appointmentID, symptom);
+}
+
+void HospitalSystem::displayAllAppointments() {
+    appointmentManager.displayAppointments();
 }
 
 // ---------------- TRIAGE OPERATIONS ----------------

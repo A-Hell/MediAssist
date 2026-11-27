@@ -11,9 +11,9 @@ int DoctorManager::registerDoctor(int departmentId, const string& name, const st
 
 bool DoctorManager::removeDoctor(int doctorId) 
 {
-	int size = doctors.size();
+	size_t size = doctors.size();
 
-	for (int i = 0; i < size; ++i)
+	for (size_t i = 0; i < size; ++i)
 		if (doctors[i].getDoctorId() == doctorId)
 		{
 			doctors.erase(doctors.begin() + i);
@@ -24,8 +24,8 @@ bool DoctorManager::removeDoctor(int doctorId)
 
 bool DoctorManager::doctorExists(int doctorId) const
 {
-	int size = doctors.size();
-	for (int i = 0; i < size; ++i)
+	size_t size = doctors.size();
+	for (size_t i = 0; i < size; ++i)
 		if (doctors[i].getDoctorId() == doctorId)
 			return true;
 	return false;
@@ -33,8 +33,8 @@ bool DoctorManager::doctorExists(int doctorId) const
 
 Doctor* DoctorManager::searchDoctor(int doctorId)
 {
-	int size = doctors.size();
-	for (int i = 0; i < size; ++i) 
+	size_t size = doctors.size();
+	for (size_t i = 0; i < size; ++i) 
 		if (doctors[i].getDoctorId() == doctorId)
 			return &doctors[i];
 	return nullptr;
@@ -108,16 +108,16 @@ void DoctorManager::displayDoctors()
 		return;
 	}
 
-	int size = doctors.size();
-	for (int i = 0; i < size; ++i) 
+	size_t size = doctors.size();
+	for (size_t i = 0; i < size; ++i) 
 		cout << doctors[i] << endl;
 }
 
 void DoctorManager::displayAvailableDoctors() 
 {
 	bool found = false;
-	int size = doctors.size();
-	for (int i = 0; i < size; ++i) 
+	size_t size = doctors.size();
+	for (size_t i = 0; i < size; ++i) 
 		if (doctors[i].isAvailable()) 
 		{
 			cout << doctors[i] << endl;
@@ -130,8 +130,8 @@ void DoctorManager::displayAvailableDoctors()
 void DoctorManager::displayDoctorsByDepartment(int departmentID) 
 {
 	bool found = false;
-	int size = doctors.size();
-	for (int i = 0; i < size; ++i) 
+	size_t size = doctors.size();
+	for (size_t i = 0; i < size; ++i) 
 		if (doctors[i].getDepartmentId() == departmentID) 
 		{
 			cout << doctors[i] << endl;
