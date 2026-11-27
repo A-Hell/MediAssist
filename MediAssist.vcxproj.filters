@@ -37,6 +37,9 @@
     <Filter Include="Resource Files\Models">
       <UniqueIdentifier>{b9afaf7e-b04f-4d20-a207-b1e2f2b4c3df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Interfaces">
+      <UniqueIdentifier>{14f3b71f-379f-403c-afe0-6b50f59f8eaf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -68,6 +71,12 @@
     </ClCompile>
     <ClCompile Include="Models\Symptoms.cpp">
       <Filter>Resource Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\CLI .cpp">
+      <Filter>Resource Files\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\GUI .cpp">
+      <Filter>Resource Files\Interfaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

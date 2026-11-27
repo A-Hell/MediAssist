@@ -1,14 +1,14 @@
-﻿#include <iostream>
-using namespace std;
+﻿#include "Common.h"
+#include "Managers/HospitalSystem.h"
+#include "Interface/CLI.h"
 
 int main()
 {
-	//  ♡ ∩__∩
-	//  („• ֊ •„)♡
-	//	| ￣U U￣￣￣￣￣￣￣￣￣|
-	//	|       (Bismillah!!) |
-	//	 ￣￣￣￣￣￣￣￣￣￣￣￣
+    HospitalSystem hospital;
 
+    CLI cli(hospital);
+
+    cli.run();
+
+    return 0;
 }
-
-// Setup Complete! ♡ ∩__∩
