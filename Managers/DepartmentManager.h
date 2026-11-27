@@ -2,9 +2,12 @@
 #include "Common.h"
 #include "../Models/Department.h"
 
+class FileManager;
+
 class DepartmentManager
 {
 	vector<Department> departments;
+	friend class FileManager;
 
 public:
 	// Department Management Functions

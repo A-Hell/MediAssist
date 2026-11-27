@@ -2,6 +2,7 @@
 #include "Common.h"
 
 class DepartmentManager; // Forward declaration of DepartmentManager class
+class FileManager;
 
 class Department
 {
@@ -11,6 +12,7 @@ class Department
 
 	inline static int counter = 0; // Static counter to generate unique department IDs
 	friend class DepartmentManager;
+	friend class FileManager;
 
 	// Setters for friends
 	void setDepartmentId(int departmentId) { this->departmentId = departmentId; }

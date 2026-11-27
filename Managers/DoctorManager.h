@@ -2,10 +2,13 @@
 #include "Common.h"
 #include "../Models/Doctor.h"
 
+class FileManager;
+
 class DoctorManager
 {
 
 	vector<Doctor> doctors;
+	friend class FileManager;
 
 public:
 	// Doctor management functions

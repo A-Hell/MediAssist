@@ -2,6 +2,7 @@
 #include "Common.h"
 
 class DoctorManager; // Forward declaration of DoctorManager class
+class FileManager;
 
 class Doctor
 {
@@ -14,6 +15,7 @@ class Doctor
 
 	inline static int counter = 0; // Static counter to generate unique doctor IDs
 	friend class DoctorManager; // Declare DoctorManager as a friend class
+	friend class FileManager;
 
 	// Setters for friend classes
 	void setDoctorId(int doctorId) { this->doctorId = doctorId; }
