@@ -81,8 +81,7 @@ void CLI::handlePatientMenu()
 			removePatient();
 			break;
 		case 99:
-			handleMainMenu();
-			break;
+			return;
 		case 0:
 			createPause("Exiting the system.Goodbye!");
 			Exit();
@@ -149,7 +148,6 @@ void CLI::registerPatient()
 	}
 
 	createPause("\nPress Enter to return to the Patient Menu...");
-	handlePatientMenu();
 }
 
 void CLI::displayPatientDetails()
@@ -169,7 +167,6 @@ void CLI::displayPatientDetails()
 	}
 
 	createPause("\nPress Enter to return to the Patient Menu...");
-	handlePatientMenu();
 }
 
 void CLI::removePatient()
@@ -189,7 +186,6 @@ void CLI::removePatient()
 	}
 
 	createPause("\nPress Enter to return to the Patient Menu...");
-	handlePatientMenu();
 }
 
 void CLI::handlePatientUpdation()
@@ -335,7 +331,6 @@ void CLI::handlePatientUpdation()
 		cout << RED + BOLD + "Patient with ID " << patientID << " not found." << RESET << endl;
 
 	createPause("\nPress Enter to return to the Patient Menu...");
-	handlePatientMenu();
 }
 
 
@@ -393,8 +388,7 @@ void CLI::handleDoctorMenu()
 			createPause("\nPress Enter to return to the Doctor Menu...");
 			break;
 		case 99:
-			handleMainMenu();
-			break;
+			return;
 		case 0:
 			createPause("Exiting the system.Goodbye!");
 			Exit();
@@ -453,7 +447,6 @@ void CLI::registerDoctor()
 	}
 
 	createPause("\nPress Enter to return to the Patient Menu...");
-	handleDoctorMenu();
 }
 
 void CLI::displayDoctorDetails()
@@ -474,7 +467,6 @@ void CLI::displayDoctorDetails()
 	}
 
 	createPause("\nPress Enter to return to the Doctor Menu...");
-	handleDoctorMenu();
 }
 
 void CLI::removeDoctor()
@@ -494,7 +486,6 @@ void CLI::removeDoctor()
 	}
 
 	createPause("\nPress Enter to return to the Doctor Menu...");
-	handleDoctorMenu();
 }
 
 void CLI::handleDoctorUpdation()
@@ -597,7 +588,7 @@ void CLI::handleDoctorUpdation()
 				break;
 
 			case 99:
-				handleDoctorMenu();
+				return;
 				break;
 			case 0:
 				createPause("Exiting the system.Goodbye!");
@@ -666,7 +657,7 @@ void CLI::handleDepartmentMenu()
 			break;
 
 		case 99:
-			handleMainMenu();
+			return;
 			break;
 		case 0:
 			createPause("Exiting the system.Goodbye!");
@@ -740,7 +731,6 @@ void CLI::displayDepartmentDetails()
 	}
 
 	createPause("\nPress Enter to return to the Department Menu...");
-	handleDepartmentMenu();
 }
 
 void CLI::handleDepartmentUpdation()
@@ -813,8 +803,7 @@ void CLI::handleDepartmentUpdation()
 				break;
 
 			case 99:
-				handleDepartmentMenu();
-				break;
+				return;
 			case 0:
 				createPause("Exiting the system.Goodbye!");
 				Exit();
@@ -828,7 +817,6 @@ void CLI::handleDepartmentUpdation()
 		cout << RED + BOLD + "Department with ID " << departmentID << " not found." << RESET << endl;
 
 	createPause("\nPress Enter to return to the Department Menu...");
-	handleDepartmentMenu();
 }
 
 void CLI::removeDepartment() {
@@ -844,7 +832,6 @@ void CLI::removeDepartment() {
 		cout << RED + BOLD + "Failed to remove Department with ID " << departmentID << RESET << endl;
 	}
 	createPause("\nPress Enter to return to the Department Menu...");
-	handleDepartmentMenu();
 }
 
 void CLI::addDoctorToDepartment() {
@@ -871,7 +858,6 @@ void CLI::addDoctorToDepartment() {
 	}
 
 	createPause("\nPress Enter to return to the Department Menu...");
-	handleDepartmentMenu();
 }
 
 void CLI::removeDoctorFromDepartment() {
@@ -896,7 +882,6 @@ void CLI::removeDoctorFromDepartment() {
 	}
 
 	createPause("\nPress Enter to return to the Department Menu...");
-	handleDepartmentMenu();
 }
 
 // ---------- Utility Functions ----------
