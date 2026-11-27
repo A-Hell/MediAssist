@@ -50,8 +50,8 @@ int HospitalSystem::createDepartment(const string& name, const string& descripti
     return departmentManager.createDepartment(name, description, location);
 }
 
-bool HospitalSystem::findDepartment(int departmentID){
-    return departmentManager.departmentExists(departmentID);
+Department* HospitalSystem::findDepartment(int departmentID){
+    return departmentManager.searchDepartment(departmentID);
 }
 
 bool HospitalSystem::removeDepartment(int departmentID){
@@ -210,3 +210,13 @@ void HospitalSystem::displayAllAppointments() {
 // ---------------- TRIAGE OPERATIONS ----------------
 
 // Waiting-list and doctor-assignment workflows will go here.
+
+// ---------------- SYMPTOM OPERATIONS ----------------
+
+vector<Symptom> HospitalSystem::getAvailableSymptoms(const string& departmentName){
+	return ::getAvailableSymptoms(departmentName);
+}
+
+string HospitalSystem::symptomToString(Symptom symptom) {
+	return ::symptomToString(symptom);
+}

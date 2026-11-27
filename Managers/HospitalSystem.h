@@ -7,6 +7,7 @@
 #include "DepartmentManager.h"
 #include "AppointmentManager.h"
 #include "TriageManager.h"
+#include "Models/Symptoms.h"
 
 class HospitalSystem
 {
@@ -57,7 +58,7 @@ public:
         const string& location
     );
 
-	bool findDepartment(int departmentID);
+	Department* findDepartment(int departmentID);
 	bool removeDepartment(int departmentID);
 	bool departmentExists(int departmentID);
 
@@ -132,4 +133,10 @@ public:
     // ---------------- TRIAGE OPERATIONS ----------------
 
     // Waiting-list and doctor-assignment workflows will go here.
+
+    // ---------------- SYMPTOM OPERATIONS ----------------
+
+	vector<Symptom> getAvailableSymptoms(const string& departmentName); // Wrapper for CLI
+	string symptomToString(Symptom symptom); // Wrapper for CLI
+
 };

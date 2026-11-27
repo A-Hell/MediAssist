@@ -35,6 +35,7 @@ public:
 	int getDepartmentId() const { return departmentId; }
 	string getName() const { return name; }
 	string getPhone() const { return phone; }
+	string getSpecialization() const { return specialization; }
 	bool isAvailable() const { return availability; }
 
 	friend ostream& operator<<(ostream& out, const Doctor& doctor)

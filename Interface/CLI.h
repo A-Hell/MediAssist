@@ -16,6 +16,7 @@ private:
     // ---------- Patient Menu Functions ----------
     void handlePatientMenu();
     void showPatientMenu();
+
     void registerPatient();
     void displayPatientDetails();
     void handlePatientUpdation();
@@ -24,6 +25,26 @@ private:
     // ---------- Appointment Menu Functions ----------
     void handleAppointmentMenu();
 
+    // ---------- Doctor Menu Functions ----------
+    void handleDoctorMenu();
+	void showDoctorMenu();
+
+	void registerDoctor();
+	void displayDoctorDetails();
+	void handleDoctorUpdation();
+	void removeDoctor();
+
+	// ---------- Department Menu Functions ----------
+	void handleDepartmentMenu();
+	void showDepartmentMenu();
+
+    void registerDepartment();
+	void displayDepartmentDetails();
+	void handleDepartmentUpdation();
+	void removeDepartment();
+
+	void addDoctorToDepartment();
+	void removeDoctorFromDepartment();
 
 	// ---------- Utility Functions ----------
     void clearInputBuffer();
