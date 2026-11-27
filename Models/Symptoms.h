@@ -1,10 +1,7 @@
-
 #ifndef SYMPTOMS_H
 #define SYMPTOMS_H
 
 #include "Common.h"
-#include <vector>
-#include <string>
 
 // All the symptoms that patients can select in MediAssist.
 enum class Symptom

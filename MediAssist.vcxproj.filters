@@ -31,8 +31,11 @@
     <Filter Include="Resource Files\Data">
       <UniqueIdentifier>{c1c5c0d1-16a9-42cc-9ff2-2455b6d60b06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Managers">
+    <Filter Include="Resource Files\Managers">
       <UniqueIdentifier>{bd220d3c-529a-4165-b2fd-c28105f81066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Models">
+      <UniqueIdentifier>{b9afaf7e-b04f-4d20-a207-b1e2f2b4c3df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -46,22 +49,25 @@
       <Filter>Header Files\Storage</Filter>
     </ClCompile>
     <ClCompile Include="Managers\HospitalSystem.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Resource Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Managers\DoctorManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Resource Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Managers\DepartmentManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Resource Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Managers\AppointmentManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Resource Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Managers\TriageManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Resource Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Managers\PatientManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Resource Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Symptoms.cpp">
+      <Filter>Resource Files\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="Common.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Symptoms.h">
+      <Filter>Header Files\Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

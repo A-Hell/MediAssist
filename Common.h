@@ -35,7 +35,7 @@ const string DCYAN = "\033[36m";
 
 
 // Function to validate date format (YYYY-MM-DD)
-bool isValidDate(const string& date)
+inline bool isValidDate(const string& date)
 {
 	if (date.length() != 10 || date[4] != '-' || date[7] != '-')
 		return false;
@@ -68,7 +68,7 @@ bool isValidDate(const string& date)
 
 
 // Function to validate time format (HH:MM)
-bool isValidTime(const string& time)
+inline bool isValidTime(const string& time)
 {
 	if (time.length() != 5 || time[2] != ':')
 		return false;

@@ -1,4 +1,4 @@
-#include "TriageManager.h"
+#include "../Managers/TriageManager.h"
 
 // Finds the waiting lists belonging to a department.
 TriageManager::Node* TriageManager::findDepartment(int departmentID) const

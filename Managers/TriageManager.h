@@ -4,7 +4,7 @@
 
 #include "../Structures/Queue.h"
 #include "../Structures/Heap.h"
-#include "Symptoms.h"
+#include "../Models/Symptoms.h"
 
 class TriageManager
 {

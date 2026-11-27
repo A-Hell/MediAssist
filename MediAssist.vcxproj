@@ -163,6 +163,7 @@
     <ClCompile Include="Managers\HospitalSystem.cpp" />
     <ClCompile Include="Managers\PatientManager.cpp" />
     <ClCompile Include="Managers\TriageManager.cpp" />
+    <ClCompile Include="Models\Symptoms.cpp" />
     <ClCompile Include="Storage\FileManager.cpp" />
     <ClCompile Include="Structures\Queue.h" />
   </ItemGroup>
@@ -180,6 +181,7 @@
     <ClInclude Include="Models\Doctor.h" />
     <ClInclude Include="Models\Appointment.h" />
     <ClInclude Include="Models\Patient.h" />
+    <ClInclude Include="Models\Symptoms.h" />
     <ClInclude Include="Storage\FileManager.h" />
     <ClInclude Include="Structures\BST.h" />
     <ClInclude Include="Structures\Graph.h" />

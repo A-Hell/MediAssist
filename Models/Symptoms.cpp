@@ -1,4 +1,4 @@
-#include "Symptoms.h"
+#include "../Models/Symptoms.h"
 
 // Returns the points assigned to the selected symptom.
 int getSymptomPoints(Symptom symptom)
