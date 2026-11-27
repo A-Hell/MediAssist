@@ -1,0 +1,22 @@
+MEDIASSIST_DEPARTMENTS_V1
+4
+1
+"Cardiology"
+"Heart-related treatments and procedures."
+"Building A, Floor 2"
+0
+2
+"Respiratory"
+"Treatment of lung and breathing disorders."
+"Building B, Floor 1"
+0
+3
+"Gastroenterology"
+"Treatment of digestive system disorders."
+"Building C, Floor 1"
+0
+4
+"Orthopedics"
+"Treatment of bones, joints, and muscles."
+"Building D, Floor 2"
+0
