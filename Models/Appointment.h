@@ -50,6 +50,14 @@ public:
         out << BOLD + "Date: " + RESET << appointment.appointmentDate << endl;
         out << BOLD + "Time: " + RESET << appointment.appointmentTime << endl;
 		out << BOLD + "Symptoms: " + RESET;
+		size_t symptomCount = appointment.symptoms.size();
+        for(int i = 0; i < symptomCount; ++i)
+        {
+            out << symptomToString(appointment.symptoms[i]);
+            if (i < symptomCount - 1)
+                out << ", ";
+		}
+        out << endl;
         out << BOLD + "Status: " + RESET << appointment.status << endl;
         return out;
     }

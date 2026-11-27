@@ -1,6 +1,93 @@
 #include "../Models/Symptoms.h"
 
-// Returns the points assigned to the selected symptom.
+// Returns the string representation of the symptom.
+string symptomToString(Symptom symptom)
+{
+    switch (symptom)
+    {
+        // General symptoms
+    case Symptom::Fever:
+        return "Fever";
+
+    case Symptom::Fatigue:
+        return "Fatigue";
+
+    case Symptom::Headache:
+        return "Headache";
+
+    case Symptom::Dizziness:
+        return "Dizziness";
+
+    case Symptom::GeneralWeakness:
+        return "General Weakness";
+
+        // Cardiology
+    case Symptom::ChestDiscomfort:
+        return "Chest Discomfort";
+
+    case Symptom::Palpitations:
+        return "Palpitations";
+    case Symptom::Fainting:
+        return "Fainting";
+
+    case Symptom::LegSwelling:
+        return "Leg Swelling";
+
+        // Respiratory
+    case Symptom::Cough:
+        return "Cough";
+
+    case Symptom::SoreThroat:
+        return "Sore Throat";
+
+    case Symptom::Wheezing:
+        return "Wheezing";
+
+    case Symptom::BreathingDifficulty:
+        return "Breathing Difficulty";
+
+    case Symptom::ChestTightness:
+        return "Chest Tightness";   
+
+        // Gastroenterology
+    case Symptom::AbdominalPain:
+        return "Abdominal Pain";
+
+    case Symptom::Nausea:
+        return "Nausea";
+
+    case Symptom::Vomiting:
+        return "Vomiting";
+
+    case Symptom::Diarrhea:
+        return "Diarrhea";
+
+    case Symptom::BloodInStool:
+        return "Blood In Stool";
+
+        // Orthopedics
+    case Symptom::JointPain:
+        return "Joint Pain";   
+    case Symptom::BackPain:
+        return "Back Pain";
+
+    case Symptom::JointSwelling:
+        return "Joint Swelling";
+
+    case Symptom::LimitedMovement:
+        return "Limited Movement";
+
+    case Symptom::LimbInjury:
+        return "Limb Injury";
+
+    case Symptom::SuspectedFracture:
+        return "Suspected Fracture";
+
+    default:
+        return "Unknown Symptom";
+    }
+}
+
 int getSymptomPoints(Symptom symptom)
 {
     switch (symptom)

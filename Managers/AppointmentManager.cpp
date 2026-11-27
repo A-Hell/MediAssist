@@ -6,7 +6,7 @@
 bool AppointmentManager::appointmentExists(int appointmentID) 
 { return appointmentTree.search(appointmentID) != nullptr; }
 
-int AppointmentManager::createAppointment(int departmentID, int patientID, const vector<Symptom> symptoms, const string& appointmentDate, const string& appointmentTime) 
+int AppointmentManager::createAppointment( int patientID, int departmentID , const vector<Symptom> symptoms, const string& appointmentDate, const string& appointmentTime)
 {
 	if (!isValidDate(appointmentDate)) 
 	{

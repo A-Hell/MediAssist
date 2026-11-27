@@ -50,6 +50,8 @@ enum class Priority
     Urgent
 };
 
+// Returns the string representation of a selected symptom.
+string symptomToString(Symptom symptom);
 
 // Returns the points assigned to a selected symptom.
 int getSymptomPoints(Symptom symptom);
