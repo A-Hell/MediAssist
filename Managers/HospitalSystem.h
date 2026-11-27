@@ -139,4 +139,9 @@ public:
 	vector<Symptom> getAvailableSymptoms(const string& departmentName); // Wrapper for CLI
 	string symptomToString(Symptom symptom); // Wrapper for CLI
 
+    // ---------------- FILE OPERATIONS ----------------
+
+    bool saveHospitalData();
+    bool loadHospitalData();
+
 };

@@ -1,5 +1,5 @@
 #include "HospitalSystem.h"
-
+#include "../Storage/FileManager.h"
 // ---------------- PATIENT OPERATIONS ----------------
 
 int HospitalSystem::registerPatient(string name,int age,string gender,string phone,string address,double height,double weight)
@@ -219,4 +219,17 @@ vector<Symptom> HospitalSystem::getAvailableSymptoms(const string& departmentNam
 
 string HospitalSystem::symptomToString(Symptom symptom) {
 	return ::symptomToString(symptom);
+}
+
+
+// ---------------- FILE OPERATIONS ----------------
+
+bool HospitalSystem::saveHospitalData()
+{
+    return FileManager::saveAll(departmentManager, doctorManager);
+}
+
+bool HospitalSystem::loadHospitalData()
+{
+    return FileManager::loadAll(departmentManager, doctorManager);
 }
