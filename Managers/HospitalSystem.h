@@ -1,20 +1,65 @@
 #pragma once
+
 #include "Common.h"
-#include "../Managers/PatientManager.h"
-#include "../Managers/DoctorManager.h"
-#include "../Managers/AppointmentManager.h"
-#include "../Managers/TriageManager.h"
-#include "../Managers/DepartmentManager.h"
+
+#include "PatientManager.h"
+#include "DoctorManager.h"
+#include "DepartmentManager.h"
+#include "AppointmentManager.h"
+#include "TriageManager.h"
 
 class HospitalSystem
 {
-	PatientManager patientManager;
-	AppointmentManager appointmentManager;
-
+private:
+    // Core managers
+    PatientManager patientManager;
+    DoctorManager doctorManager;
+    DepartmentManager departmentManager;
+    AppointmentManager appointmentManager;
+    TriageManager triageManager;
 
 public:
+    // Constructor
+    HospitalSystem(int patientCapacity = 25) : patientManager(patientCapacity), triageManager(patientCapacity) {}
 
-	HospitalSystem(int patientCapacity = 25); // initializes the hospital system
-	bool registerPatient(); // register a new patient 
+    // ---------------- PATIENT OPERATIONS ----------------
 
+    int registerPatient(
+        string name,
+        int age,
+        string gender,
+        string phone,
+        string address,
+        double height,
+        double weight
+    );
+
+    const Patient* findPatient(int patientID);
+
+    // ---------------- DEPARTMENT OPERATIONS ----------------
+
+    // Add retrieval and management operations here as needed.
+
+    // ---------------- DOCTOR OPERATIONS ----------------
+
+    // Add retrieval and management operations here as needed.
+
+    // ---------------- APPOINTMENT OPERATIONS ----------------
+
+    int createAppointment(
+        int patientID,
+        int departmentID,
+        const vector<Symptom>& symptoms,
+        const string& date,
+        const string& time
+    );
+
+    const Appointment* findAppointment(int appointmentID);
+
+    bool cancelAppointment(int appointmentID);
+    bool completeAppointment(int appointmentID);
+
+    // ---------------- TRIAGE OPERATIONS ----------------
+
+    // Waiting-list and doctor-assignment workflows will go here.
 };
