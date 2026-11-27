@@ -36,6 +36,19 @@ public:
 
     const Patient* findPatient(int patientID);
 
+    bool updatePatientName(int patientID, string name);
+    bool updatePatientAge(int patientID, int age);
+    bool updatePatientGender(int patientID, string gender);
+    bool updatePatientPhone(int patientID, string phone);
+    bool updatePatientAddress(int patientID, string address);
+    bool updatePatientHeight(int patientID, double height);
+    bool updatePatientWeight(int patientID, double weight);
+
+    bool patientExists(int patientID);
+    bool removePatient(int patientID);
+
+	void displayAllPatients();
+
     // ---------------- DEPARTMENT OPERATIONS ----------------
 
     // Add retrieval and management operations here as needed.

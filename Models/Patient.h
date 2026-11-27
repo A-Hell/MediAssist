@@ -34,35 +34,35 @@ public:
         patientID = generatePatientID();
     }
 
-    int getPatientID()
+    int getPatientID() const
     { 
         return patientID; 
     }
-    string getName() 
+    string getName() const
     { 
         return name; 
     }
-    int getAge()
+    int getAge() const
     { 
         return age; 
     }
-    string getGender() 
+    string getGender() const
     { 
         return gender; 
     }
-    string getPhone() 
+    string getPhone() const
     {
         return phone; 
     }
-    string getAddress() 
+    string getAddress() const
     {
         return address; 
     }
-    double getHeight()
+    double getHeight() const
     { 
         return height; 
     }
-    double getWeight() 
+    double getWeight() const
     { 
         return weight; 
     }
