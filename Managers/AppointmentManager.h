@@ -15,7 +15,7 @@ class AppointmentManager
 public:
 
     // Appointment operations
-    int createAppointment(int patientID, int doctorId, const string& appointmentDate, const string& appointmentTime);
+    int createAppointment(int patientID, int departmentID, const vector<Symptom> symptoms, const string& appointmentDate, const string& appointmentTime);
 
     Appointment* searchAppointment(int appointmentID);
 
@@ -23,7 +23,7 @@ public:
 
 	bool updateAppointmentTime(int appointmentID, const string& newTime);
 
-	bool updateAppointmentDoctor (int appointmentID, int newDoctorId);
+	bool updateAppointmentDepartment (int appointmentID, int newDepartmentID);
 
     bool setAppointmentWaiting(int appointmentID);
 

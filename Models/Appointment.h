@@ -1,16 +1,18 @@
 #ifndef APPOINTMENT_H
 #define APPOINTMENT_H
 #include "Common.h"
+#include "../Models/Symptoms.h"
 
 class AppointmentManager;
 
 class Appointment
 {
     int appointmentID;
+    int departmentID;
     int patientID;
-    int doctorId;
-    string appointmentDate;
+	vector<Symptom> symptoms;
     string appointmentTime;
+    string appointmentDate;
     string status;
 
     inline static int counter = 1;
@@ -24,53 +26,30 @@ class Appointment
 
 public:
 
-    Appointment() : appointmentID(0), patientID(0), doctorId(0), appointmentDate("N/A"), appointmentTime("N/A"), status("Scheduled")
+    Appointment() : appointmentID(0), patientID(0), departmentID(0), appointmentDate("N/A"), appointmentTime("N/A"), status("Scheduled")
     {
         appointmentID = generateAppointmentID();
     }
 
-    Appointment(int patientID, int doctorId, string appointmentDate, string appointmentTime, string status = "Scheduled") : appointmentID(0), patientID(patientID), doctorId(doctorId), appointmentDate(appointmentDate), appointmentTime(appointmentTime), status(status)
-    {
-        appointmentID = generateAppointmentID();
-    }
+    Appointment(int patientID, int departmentID, const vector<Symptom> symptoms, string appointmentDate, string appointmentTime, string status = "Scheduled") : appointmentID(0), patientID(patientID), departmentID(departmentID), symptoms(symptoms), appointmentDate(appointmentDate), appointmentTime(appointmentTime), status(status)
+    { appointmentID = generateAppointmentID(); }
 
-    int getAppointmentID() const
-    {
-        return appointmentID; 
-    }
-
-    int getPatientID() const
-    { 
-        return patientID; 
-    }
-
-    int getDoctorId() const
-    { 
-        return doctorId; 
-    }
-
-    string getAppointmentDate() const
-    { 
-        return appointmentDate; 
-    }
-
-    string getAppointmentTime() const
-    {
-        return appointmentTime; 
-    }
-
-    string getStatus() const
-    {
-        return status; 
-    }
+    string getStatus() const { return status; }
+    int getPatientID() const { return patientID; }
+    int getDepartmentID() const { return departmentID; }
+    int getAppointmentID() const { return appointmentID; }
+    string getAppointmentDate() const { return appointmentDate; }
+    string getAppointmentTime() const { return appointmentTime; }
+    const vector<Symptom>& getSymptoms() const { return symptoms; }
 
     friend ostream& operator<<(ostream& out, const Appointment& appointment)
     {
         out << BOLD + "Appointment ID: " + RESET << appointment.appointmentID << endl;
         out << BOLD + "Patient ID: " + RESET << appointment.patientID << endl;
-        out << BOLD + "Doctor ID: " + RESET << appointment.doctorId << endl;
+        out << BOLD + "Department ID: " + RESET << appointment.departmentID << endl;
         out << BOLD + "Date: " + RESET << appointment.appointmentDate << endl;
         out << BOLD + "Time: " + RESET << appointment.appointmentTime << endl;
+		out << BOLD + "Symptoms: " + RESET;
         out << BOLD + "Status: " + RESET << appointment.status << endl;
         return out;
     }

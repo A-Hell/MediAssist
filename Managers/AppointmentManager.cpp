@@ -6,7 +6,7 @@
 bool AppointmentManager::appointmentExists(int appointmentID) 
 { return appointmentTree.search(appointmentID) != nullptr; }
 
-int AppointmentManager::createAppointment(int patientID, int doctorId, const string& appointmentDate, const string& appointmentTime) 
+int AppointmentManager::createAppointment(int departmentID, int patientID, const vector<Symptom> symptoms, const string& appointmentDate, const string& appointmentTime) 
 {
 	if (!isValidDate(appointmentDate)) 
 	{
@@ -22,7 +22,7 @@ int AppointmentManager::createAppointment(int patientID, int doctorId, const str
 	}
 
 	// Create a new appointment
-	Appointment newAppointment(patientID, doctorId, appointmentDate, appointmentTime);
+	Appointment newAppointment(patientID, departmentID, symptoms, appointmentDate, appointmentTime);
 	
 	// Insert the new appointment into the BST
 	appointmentTree.insert(newAppointment);
@@ -95,13 +95,13 @@ bool AppointmentManager::updateAppointmentTime(int appointmentID, const string& 
 	}
 }
 
-bool AppointmentManager::updateAppointmentDoctor(int appointmentID, int newDoctorID)
+bool AppointmentManager::updateAppointmentDepartment(int appointmentID, int newDepartmentID)
 {
 	Appointment* appointment = appointmentTree.search(appointmentID);
 
 	if (appointment)
 	{
-		appointment->doctorId = newDoctorID;
+		appointment->departmentID = newDepartmentID;
 		return true;
 	}
 	else
