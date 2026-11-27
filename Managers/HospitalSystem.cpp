@@ -46,11 +46,120 @@ bool HospitalSystem::patientExists(int patientID)
 
 // ---------------- DEPARTMENT OPERATIONS ----------------
 
-// Add retrieval and management operations here as needed.
+int HospitalSystem::createDepartment(const string& name, const string& description, const string& location){
+    return departmentManager.createDepartment(name, description, location);
+}
+
+bool HospitalSystem::findDepartment(int departmentID){
+    return departmentManager.departmentExists(departmentID);
+}
+
+bool HospitalSystem::removeDepartment(int departmentID){
+    return departmentManager.removeDepartment(departmentID);
+}
+
+bool HospitalSystem::departmentExists(int departmentID){
+    return departmentManager.departmentExists(departmentID);
+}
+
+bool HospitalSystem::updateDepartmentName(int departmentID, const string& newName){
+    return departmentManager.updateDepartmentName(departmentID, newName);
+}
+
+bool HospitalSystem::updateDepartmentDescription(int departmentID, const string& newDescription){
+    return departmentManager.updateDepartmentDescription(departmentID, newDescription);
+}
+
+bool HospitalSystem::updateDepartmentLocation(int departmentID, const string& newLocation){
+    return departmentManager.updateDepartmentLocation(departmentID, newLocation);
+}
+
+bool HospitalSystem::addDoctorToDepartment(int departmentID, int doctorID){
+    return departmentManager.addDoctorToDepartment(departmentID, doctorID);
+}
+
+bool HospitalSystem::removeDoctorFromDepartment(int departmentID, int doctorID){
+    return departmentManager.removeDoctorFromDepartment(departmentID, doctorID);
+}
+
+bool HospitalSystem::isDoctorFromDepartment(int departmentID, int doctorID){
+    return departmentManager.isDoctorFromDepartment(departmentID, doctorID);
+}
+
+int HospitalSystem::findDoctorsDepartment(int doctorID){
+    return departmentManager.findDoctorsDepartment(doctorID);
+}
+
+void HospitalSystem::displayAllDepartments(){
+    departmentManager.displayDepartments();
+}
+
+void HospitalSystem::displayDepartmentDoctors(int departmentID){
+    departmentManager.displayDepartmentDoctors(departmentID);
+}
 
 // ---------------- DOCTOR OPERATIONS ----------------
 
-// Add retrieval and management operations here as needed.
+int HospitalSystem::registerDoctor(int departmentID, const string& name, const string& phone, const string& specialization, bool availability){
+    int ID =  doctorManager.registerDoctor(departmentID, name, phone, specialization, availability);
+    if (ID != -1) {
+        departmentManager.addDoctorToDepartment(departmentID, ID);
+	}
+	return ID;
+}
+
+bool HospitalSystem::removeDoctor(int doctorID){
+    int departmentID = departmentManager.findDoctorsDepartment(doctorID);
+    if (departmentID != -1) {
+        departmentManager.removeDoctorFromDepartment(departmentID, doctorID);
+    }
+    return doctorManager.removeDoctor(doctorID);
+}
+
+bool HospitalSystem::doctorExists(int doctorID){
+    return doctorManager.doctorExists(doctorID);
+}
+
+Doctor* HospitalSystem::findDoctor(int doctorID){
+    return doctorManager.searchDoctor(doctorID);
+}
+
+bool HospitalSystem::updateDoctorDepartment(int doctorID, int newDepartmentID){
+    int oldDepartmentID = departmentManager.findDoctorsDepartment(doctorID);
+    if (oldDepartmentID != -1) {
+        departmentManager.removeDoctorFromDepartment(oldDepartmentID, doctorID);
+    }
+    departmentManager.addDoctorToDepartment(newDepartmentID, doctorID);
+    return doctorManager.updateDoctorDepartment(doctorID, newDepartmentID);
+}
+
+bool HospitalSystem::updateDoctorName(int doctorID, const string& newName){
+    return doctorManager.updateDoctorName(doctorID, newName);
+}
+
+bool HospitalSystem::updateDoctorPhone(int doctorID, const string& newPhone){
+    return doctorManager.updateDoctorPhone(doctorID, newPhone);
+}
+
+bool HospitalSystem::updateDoctorSpecialization(int doctorID, const string& newSpecialization){
+    return doctorManager.updateDoctorSpecialization(doctorID, newSpecialization);
+}
+
+bool HospitalSystem::updateDoctorAvailability(int doctorID, bool newAvailability){
+    return doctorManager.updateDoctorAvailability(doctorID, newAvailability);
+}
+
+void HospitalSystem::displayAllDoctors(){
+    doctorManager.displayDoctors();
+}
+
+void HospitalSystem::displayAvailableDoctors(){
+    doctorManager.displayAvailableDoctors();
+}
+
+void HospitalSystem::displayDoctorsByDepartment(int departmentID){
+    doctorManager.displayDoctorsByDepartment(departmentID);
+}
 
 // ---------------- APPOINTMENT OPERATIONS ----------------
 

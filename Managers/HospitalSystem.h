@@ -51,11 +51,56 @@ public:
 
     // ---------------- DEPARTMENT OPERATIONS ----------------
 
-    // Add retrieval and management operations here as needed.
+	int createDepartment(
+        const string& name,
+        const string& description,
+        const string& location
+    );
+
+	bool findDepartment(int departmentID);
+	bool removeDepartment(int departmentID);
+	bool departmentExists(int departmentID);
+
+	// Department update operations
+	bool updateDepartmentName(int departmentID, const string& newName);
+	bool updateDepartmentDescription(int departmentID, const string& newDescription);
+	bool updateDepartmentLocation(int departmentID, const string& newLocation);
+
+	// Department doctor management
+	bool addDoctorToDepartment(int departmentID, int doctorID);
+	bool removeDoctorFromDepartment(int departmentID, int doctorID);
+	bool isDoctorFromDepartment(int departmentID, int doctorID);
+	int findDoctorsDepartment(int doctorID);
+
+	// Department Display operations
+	void displayAllDepartments();
+	void displayDepartmentDoctors(int departmentID);
 
     // ---------------- DOCTOR OPERATIONS ----------------
 
-    // Add retrieval and management operations here as needed.
+    int registerDoctor(
+        int departmentID,
+        const string& name,
+        const string& phone,
+        const string& specialization,
+        bool availability = true
+	);
+
+	bool removeDoctor(int doctorID);
+	bool doctorExists(int doctorID);
+	Doctor* findDoctor(int doctorID);
+
+	// Doctor update operations
+	bool updateDoctorDepartment(int doctorID, int newDepartmentID);
+	bool updateDoctorName(int doctorID, const string& newName);
+	bool updateDoctorPhone(int doctorID, const string& newPhone);
+	bool updateDoctorSpecialization(int doctorID, const string& newSpecialization);
+	bool updateDoctorAvailability(int doctorID, bool newAvailability);
+
+	// Doctor Display operations
+	void displayAllDoctors();
+	void displayAvailableDoctors();
+	void displayDoctorsByDepartment(int departmentID);
 
     // ---------------- APPOINTMENT OPERATIONS ----------------
 
