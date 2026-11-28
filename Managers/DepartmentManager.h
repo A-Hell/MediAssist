@@ -27,6 +27,9 @@ public:
 	bool addDoctorToDepartment(int departmentID, int doctorID);
 	bool removeDoctorFromDepartment(int departmentID, int doctorID);
 
+	// Data Retrieval Functions
+	vector<Department*> getAllDepartments();
+
 	// Display functions
 	void displayDepartments();
 	void displayDepartmentDoctors(int departmentID);

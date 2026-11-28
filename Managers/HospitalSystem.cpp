@@ -90,6 +90,19 @@ int HospitalSystem::findDoctorsDepartment(int doctorID){
     return departmentManager.findDoctorsDepartment(doctorID);
 }
 
+vector<pair<int, string>> HospitalSystem::getAllDepartmentsIdName(){
+    vector<Department*> departments = departmentManager.getAllDepartments();
+    vector<pair<int, string>> idNamePairs;
+    for (const auto& dept : departments) {
+        idNamePairs.emplace_back(dept->getDepartmentId(), dept->getName());
+    }
+    return idNamePairs;
+}
+
+vector<Department*> HospitalSystem::getAllDepartments(){
+    return departmentManager.getAllDepartments();
+}
+
 void HospitalSystem::displayAllDepartments(){
     departmentManager.displayDepartments();
 }
@@ -177,10 +190,6 @@ bool HospitalSystem::updateAppointmentDate(int appointmentID, const string& newD
 
 bool HospitalSystem::updateAppointmentTime(int appointmentID, const string& newTime) {
     return appointmentManager.updateAppointmentTime(appointmentID, newTime);
-}
-
-bool HospitalSystem::updateAppointmentDepartment(int appointmentID, int newDepartmentID) {
-    return appointmentManager.updateAppointmentDepartment(appointmentID, newDepartmentID);
 }
 
 bool HospitalSystem::cancelAppointment(int appointmentID) {

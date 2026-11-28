@@ -178,7 +178,7 @@ public:
 	// Display all appointments in chronological order
 	void display() const
 	{
-		cout << "Appointments in chronological order:" << endl;
+		cout << "Appointments in chronological order:" << endl << endl;
 		if (!root)
 			cout << "No appointments found." << endl;
 		else 

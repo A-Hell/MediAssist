@@ -111,6 +111,16 @@ bool DepartmentManager::removeDoctorFromDepartment(int departmentID, int doctorI
 	return false;
 }
 
+// Data Retrieval Functions
+vector<Department*> DepartmentManager::getAllDepartments()
+{
+	vector<Department*> departmentPointers;
+	size_t size = departments.size();
+	for (size_t i = 0; i < size; ++i)
+		departmentPointers.push_back(&departments[i]);
+	return departmentPointers;
+}
+
 // Display Functions
 void DepartmentManager::displayDepartments()
 {

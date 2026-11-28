@@ -173,7 +173,7 @@ bool AppointmentManager::cancelAppointment(int appointmentID)
 
 	if (appointment)
 	{
-		appointment->status = "Canceled";
+		appointment->status = "Cancelled";
 		return true;
 	}
 	else
