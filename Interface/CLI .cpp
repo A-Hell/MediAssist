@@ -2,11 +2,12 @@
 #include "CLI.h"
 
 // Constructor that takes a reference to an existing HospitalSystem instance
-CLI::CLI(HospitalSystem& hospital) : hospital(hospital) {}
+CLI::CLI(HospitalSystem& hospital) : hospital(hospital), running(false) {}
 
 // Starts the CLI 
 void CLI::run() 
 {
+	running = true;
 	handleMainMenu();
 }
 
@@ -36,13 +37,12 @@ void CLI::handleMainMenu()
 			handleDepartmentMenu();
 			break;
 		case 0:
-			createPause("Exiting the system.Goodbye!");
 			Exit();
 			break;
 		default:
 			cout << "Invalid choice. Please try again." << endl;
 		}
-	} while (choice != 0);
+	} while (choice != 0 && running);
 }
 
 void CLI::showMainMenu()
@@ -83,13 +83,12 @@ void CLI::handlePatientMenu()
 		case 99:
 			return;
 		case 0:
-			createPause("Exiting the system.Goodbye!");
 			Exit();
 			break;
 		default:
 			cout << "Invalid choice. Please try again." << endl;
 		}
-	} while (choice != 0 && choice != 99);
+	} while (choice != 0 && choice != 99 && running);
 }
 
 void CLI::showPatientMenu()
@@ -319,13 +318,12 @@ void CLI::handlePatientUpdation()
 				handlePatientMenu();
 				break;
 			case 0:
-				createPause("Exiting the system.Goodbye!");
 				Exit();
 				break;
 			default:
 				cout << "Invalid choice. Please try again." << endl;
 			}
-		} while (choice != 0 && choice != 99);
+		} while (choice != 0 && choice != 99 && running);
 	}
 	else
 		cout << RED + BOLD + "Patient with ID " << patientID << " not found." << RESET << endl;
@@ -338,7 +336,272 @@ void CLI::handlePatientUpdation()
 
 void CLI::handleAppointmentMenu()
 {
-	handleMainMenu(); // Placeholder code
+	int choice;
+	do {
+		showAppointmentMenu();
+
+		cout << BOLD + GREEN + "Enter your choice: " + RESET + GRAY + ITALIC;
+		cin >> choice;
+		cout << RESET;
+
+		switch (choice) {
+		case 1:
+			registerAppointment();
+			break;
+		case 2:
+			displayAppointmentDetails();
+			break;
+		case 3:
+			handleAppointmentUpdation();
+			break;
+		case 4:
+			clearScreen();
+			cout << BOLD + UNDERLINE + "All Appointments:" + RESET << endl;
+			hospital.displayAllAppointments();
+			createPause("\nPress Enter to return to the Appointment Menu...");
+			break;
+		case 99:
+			return;
+		case 0:
+			Exit();
+			break;
+		default:
+			cout << "Invalid choice. Please try again." << endl;
+		}
+	} while (choice != 0 && choice != 99 && running);
+}
+
+void CLI::showAppointmentMenu()
+{
+	clearScreen();
+	cout << BOLD + UNDERLINE + "Appointment Menu:" + RESET << endl;
+	cout << "1: Register Appointment" << endl;
+	cout << "2: Display Appointment Details" << endl;
+	cout << "3: Update Appointment Details" << endl;
+	cout << "4: Display All Appointments" << endl;
+	cout << "99: Go back" << endl;
+	cout << "0: Exit" << endl;
+}
+
+void CLI::registerAppointment()
+{
+	clearScreen();
+	int patientID, departmentChoice, departmentID;
+	string date, time, departmentName;
+	vector<Symptom> symptoms, availiable;
+	vector<pair<int, string>> departments = hospital.getAllDepartmentsIdName();
+
+	cout << BOLD + UNDERLINE + "Register New Appointment:" + RESET << endl;
+
+	cout << BOLD + GREEN + "Enter Patient ID: " + RESET + GRAY + ITALIC;
+	cin >> patientID;
+
+	cout << RESET << BOLD + GREEN + "Enter Appointment Date (YYYY-MM-DD): " + RESET + GRAY + ITALIC;
+	clearInputBuffer();
+	getline(cin, date);
+
+	cout << RESET << BOLD + GREEN + "Enter Appointment Time (HH:MM): " + RESET + GRAY + ITALIC;
+	getline(cin, time);
+	cout << RESET;
+
+	// Display available departments
+	cout << RESET << BOLD + GREEN + "Available Departments:" + RESET << endl;
+	size_t count = departments.size();
+	for (size_t i = 0; i < count; ++i) {
+		cout << i+1 << ": " << departments[i].second << endl;
+	}
+
+	cout << RESET << BOLD + GREEN + "Choose a Department: " + RESET + GRAY + ITALIC;
+	cin >> departmentChoice;
+	departmentName = departments[departmentChoice - 1].second;
+	departmentID = departments[departmentChoice - 1].first;
+
+	// Symptom selection 
+	availiable = hospital.getAvailableSymptoms(departmentName);
+	do
+	{
+		clearScreen();
+		cout << BOLD + UNDERLINE + "Register New Appointment:" + RESET << endl;
+
+		size_t symptomCount = availiable.size();
+		size_t chosenCount = symptoms.size();
+		cout << RESET << BOLD + GREEN + "Available Symptoms for " + departmentName + ":" + RESET << endl;
+		for (size_t i = 0; i < symptomCount; ++i) {
+			cout << i+1 << ": " << hospital.symptomToString(availiable[i]) << endl;
+		}
+		// Display Chosen Symptoms
+		cout << RESET << BOLD + GREEN + "Chosen Symptoms (Enter Negative Index To remove):" + RESET << endl;
+		if (chosenCount == 0) {
+			cout << GRAY + ITALIC + "None" << RESET << endl;
+		}
+		for (size_t i = 0; i < chosenCount; ++i) {
+			cout << RED << -1 * int(i+1) << RESET + ": " << hospital.symptomToString(symptoms[i]) << endl;
+		}
+
+		int symptomChoice;
+		cout << RESET << BOLD + GREEN + "Choose a Symptom (or 0 to finish): " + RESET + GRAY + ITALIC;
+		cin >> symptomChoice;
+		if (symptomChoice == 0) {
+			break;
+		}
+		else if (symptomChoice > 0 && symptomChoice <= symptomCount ) {
+			symptoms.push_back(availiable[symptomChoice - 1]);
+			cout << DYELLOW + BOLD + "Symptom added." << RESET << endl;
+
+			// Remove the selected symptom from the available list to prevent duplicates
+			availiable.erase(availiable.begin() + symptomChoice - 1);
+		}
+		else if (symptomChoice < 0 && -1 * symptomChoice <= chosenCount) {
+			int indexToRemove = -1 * symptomChoice - 1;
+
+			// Store removed symptom back in availiable list
+			availiable.push_back(symptoms[indexToRemove]);
+
+			// Remove from chosen list
+			symptoms.erase(symptoms.begin() + indexToRemove);
+			cout << DYELLOW + BOLD + "Symptom removed." << RESET << endl;
+		}
+		else {
+			cout << RED + BOLD + "Invalid choice. Please try again." << RESET << endl;
+			createPause("\nPress Enter to continue...");
+		}
+	} while (true);
+
+
+	int ID = hospital.createAppointment(patientID, departmentID, symptoms , date, time);
+	if (ID != -1) {
+		cout << DYELLOW + BOLD + "Appointment registered successfully with ID: " << ID << RESET << endl;
+	}
+	else {
+		cout << RED + BOLD + "Failed to register appointment." << RESET << endl;
+	}
+	createPause("\nPress Enter to return to the Appointment Menu...");
+}
+
+void CLI::displayAppointmentDetails()
+{
+	clearScreen();
+	int appointmentID;
+	cout << BOLD + GREEN + "Enter Appointment ID to display details: " + RESET + GRAY + ITALIC;
+	cin >> appointmentID;
+	cout << RESET;
+	const Appointment* appointment = hospital.findAppointment(appointmentID);
+	if (appointment) {
+		cout << *appointment;
+	}
+	else {
+		cout << RED + BOLD + "Appointment with ID " << appointmentID << " not found." << RESET << endl;
+	}
+	createPause("\nPress Enter to return to the Appointment Menu...");
+}
+
+void CLI::handleAppointmentUpdation()
+{
+	int choice, appointmentID;
+	int statusChoice;
+	string temp3;
+
+	cout << BOLD + GREEN + "Enter Appointment ID to update details: " + RESET + GRAY + ITALIC;
+	cin >> appointmentID;
+	cout << RESET;
+
+	const Appointment* appointment = hospital.findAppointment(appointmentID);
+	if (appointment)
+	{
+		do {
+			clearScreen();
+			cout << BOLD + UNDERLINE + "Update Appointment Details:" + RESET << endl;
+			cout << "1: Update Date" << "( Current: " << appointment->getAppointmentDate() << " )" << endl;
+			cout << "2: Update Time" << "( Current: " << appointment->getAppointmentTime() << " )" << endl;
+			cout << "3: Update Status" << "( Current: " << appointment->getStatus() << " )" << endl;
+			cout << "99: Go Back" << endl;
+			cout << "0: Exit" << endl;
+
+			cout << BOLD + GREEN + "Enter your choice: " + RESET + GRAY + ITALIC;
+			cin >> choice;
+			cout << RESET;
+
+			switch (choice)
+			{
+			case 1:
+				cout << BOLD + GREEN + "\nEnter new Date: " + RESET + GRAY + ITALIC;
+				clearInputBuffer();
+				getline(cin, temp3);
+				cout << RESET;
+				if (hospital.updateAppointmentDate(appointmentID, temp3)) {
+					cout << DYELLOW + BOLD + "Appointment date updated successfully." << RESET << endl;
+				}
+				else {
+					cout << RED + BOLD + "Failed to update appointment date." << RESET << endl;
+				}
+				createPause("\nPress Enter to return to continue...");
+				break;
+
+			case 2:
+				cout << BOLD + GREEN + "\nEnter new Time: " + RESET + GRAY + ITALIC;
+				clearInputBuffer();
+				getline(cin, temp3);
+				cout << RESET;
+				if (hospital.updateAppointmentTime(appointmentID, temp3)) {
+					cout << DYELLOW + BOLD + "Appointment time updated successfully." << RESET << endl;
+				}
+				else {
+					cout << RED + BOLD + "Failed to update appointment time." << RESET << endl;
+				}
+				createPause("\nPress Enter to return to continue...");
+				break;
+
+			case 3:
+				// display status options
+				cout << BOLD + GREEN + "\nAvailable Status Options:" + RESET << endl;
+				cout << "1: Waiting" << endl;
+				cout << "2: Completed" << endl;
+				cout << "3: Cancelled" << endl;
+				cout << BOLD + GREEN + "Enter new Status: " + RESET + GRAY + ITALIC;
+				cin >> statusChoice;
+				switch (statusChoice) {
+				case 1:
+					if (hospital.setAppointmentWaiting(appointmentID)) {
+						cout << DYELLOW + BOLD + "Appointment status updated to Waiting." << RESET << endl;
+					}
+					else {
+						cout << RED + BOLD + "Failed to update appointment status." << RESET << endl;
+					}
+					break;
+				case 2:
+					if (hospital.completeAppointment(appointmentID)) {
+						cout << DYELLOW + BOLD + "Appointment status updated to Completed." << RESET << endl;
+					}
+					else {
+						cout << RED + BOLD + "Failed to update appointment status." << RESET << endl;
+					}
+					break;
+				case 3:
+					if (hospital.cancelAppointment(appointmentID)) {
+						cout << DYELLOW + BOLD + "Appointment status updated to Cancelled." << RESET << endl;
+					}
+					else {
+						cout << RED + BOLD + "Failed to update appointment status." << RESET << endl;
+					}
+					break;
+				default:
+					cout << RED + BOLD + "Invalid status choice." << RESET << endl;
+				}
+
+			case 99:
+				return;
+			case 0:
+				Exit();
+				break;
+			default:
+				cout << "Invalid choice. Please try again." << endl;
+			}
+		} while (choice != 0 && choice != 99 && running);
+	}
+	else
+		cout << RED + BOLD + "Appointment with ID " << appointmentID << " not found." << RESET << endl;
+
+	createPause("\nPress Enter to return to the Appointment Menu...");
 }
 
 
@@ -390,13 +653,12 @@ void CLI::handleDoctorMenu()
 		case 99:
 			return;
 		case 0:
-			createPause("Exiting the system.Goodbye!");
 			Exit();
 			break;
 		default:
 			cout << "Invalid choice. Please try again." << endl;
 		}
-	} while (choice != 0 && choice != 99);
+	} while (choice != 0 && choice != 99 && running);
 }
 
 void CLI::showDoctorMenu()
@@ -591,13 +853,12 @@ void CLI::handleDoctorUpdation()
 				return;
 				break;
 			case 0:
-				createPause("Exiting the system.Goodbye!");
 				Exit();
 				break;
 			default:
 				cout << "Invalid choice. Please try again." << endl;
 			}
-		} while (choice != 0 && choice != 99);
+		} while (choice != 0 && choice != 99 && running);
 	}
 	else
 		cout << RED + BOLD + "Doctor with ID " << doctorID << " not found." << RESET << endl;
@@ -660,13 +921,12 @@ void CLI::handleDepartmentMenu()
 			return;
 			break;
 		case 0:
-			createPause("Exiting the system.Goodbye!");
 			Exit();
 			break;
 		default:
 			cout << "Invalid choice. Please try again." << endl;
 		}
-	} while (choice != 0 && choice != 99);
+	} while (choice != 0 && choice != 99 && running);
 }
 
 void CLI::showDepartmentMenu()
@@ -805,13 +1065,12 @@ void CLI::handleDepartmentUpdation()
 			case 99:
 				return;
 			case 0:
-				createPause("Exiting the system.Goodbye!");
 				Exit();
 				break;
 			default:
 				cout << "Invalid choice. Please try again." << endl;
 			}
-		} while (choice != 0 && choice != 99);
+		} while (choice != 0 && choice != 99 && running);
 	}
 	else
 		cout << RED + BOLD + "Department with ID " << departmentID << " not found." << RESET << endl;
@@ -897,4 +1156,7 @@ void CLI::createPause(const string& message)
 
 void CLI::clearScreen() { cout << RESET; system("cls"); }
 
-void CLI::Exit() { exit(0); }
+void CLI::Exit() {
+	running = false;
+	createPause("Exiting the system.Goodbye!");
+}

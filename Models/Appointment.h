@@ -83,7 +83,17 @@ public:
                 out << ", ";
 		}
         out << endl;
-        out << BOLD + "Status: " + RESET << appointment.status << endl;
+        out << BOLD + "Status: " + RESET;
+        if (appointment.status == "Scheduled")
+            out << YELLOW + appointment.status + RESET << endl;
+        else if (appointment.status == "Completed")
+            out << GREEN + appointment.status + RESET << endl;
+        else if (appointment.status == "Cancelled")
+            out << RED + appointment.status + RESET << endl;
+        else if (appointment.status == "Waiting")
+            out << BLUE + appointment.status + RESET << endl;
+        else
+			out << appointment.status << endl;
         return out;
     }
 };

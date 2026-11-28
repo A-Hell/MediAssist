@@ -73,6 +73,10 @@ public:
 	bool isDoctorFromDepartment(int departmentID, int doctorID);
 	int findDoctorsDepartment(int doctorID);
 
+	// Data retrieval for Interfaces
+    vector<pair<int, string>> getAllDepartmentsIdName();
+	vector<Department*> getAllDepartments();
+
 	// Department Display operations
 	void displayAllDepartments();
 	void displayDepartmentDoctors(int departmentID);
@@ -118,7 +122,6 @@ public:
     // Appointment update operations
     bool updateAppointmentDate(int appointmentID, const string& newDate);
     bool updateAppointmentTime(int appointmentID, const string& newTime);
-    bool updateAppointmentDepartment(int appointmentID, int newDepartmentID);
 
     bool addSymptomToAppointment(int appointmentID, Symptom symptom);
     bool removeSymptomFromAppointment(int appointmentID, Symptom symptom);

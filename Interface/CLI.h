@@ -6,6 +6,8 @@
 
 class CLI
 {
+    bool running;
+
 private:
     HospitalSystem& hospital;
 
@@ -24,6 +26,12 @@ private:
 
     // ---------- Appointment Menu Functions ----------
     void handleAppointmentMenu();
+	void showAppointmentMenu();
+
+	void registerAppointment();
+	void displayAppointmentDetails();
+	void handleAppointmentUpdation();
+	void handleAppointmentStatusUpdate();
 
     // ---------- Doctor Menu Functions ----------
     void handleDoctorMenu();
