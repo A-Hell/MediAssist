@@ -1,22 +1,37 @@
 MEDIASSIST_DEPARTMENTS_V1
-4
-1
-"Cardiology"
-"Heart-related treatments and procedures."
-"Building A, Floor 2"
-0
-2
-"Respiratory"
-"Treatment of lung and breathing disorders."
-"Building B, Floor 1"
-0
-3
-"Gastroenterology"
-"Treatment of digestive system disorders."
-"Building C, Floor 1"
-0
-4
-"Orthopedics"
-"Treatment of bones, joints, and muscles."
-"Building D, Floor 2"
-0
+DepartmentCount 5
+
+DepartmentID 1
+Name "Cardiology"
+Description "Heart-related treatments and procedures."
+Location "Building A, Floor 2"
+DoctorCount 1
+DoctorID 1
+
+DepartmentID 2
+Name "Respiratory"
+Description "Treatment of lung and breathing disorders."
+Location "Building B, Floor 1"
+DoctorCount 1
+DoctorID 2
+
+DepartmentID 3
+Name "Gastroenterology"
+Description "Treatment of digestive system disorders."
+Location "Building C, Floor 3"
+DoctorCount 1
+DoctorID 3
+
+DepartmentID 4
+Name "Orthopedics"
+Description "Treatment of bones, joints, and muscles."
+Location "Building D, Floor 4"
+DoctorCount 1
+DoctorID 4
+
+DepartmentID 5
+Name "Neurology"
+Description "Treatment of brain and nervous system disorders."
+Location "Building E, Floor 1"
+DoctorCount 1
+DoctorID 5

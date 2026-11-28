@@ -1,6 +1,9 @@
+
 #include "FileManager.h"
 #include <fstream>
 #include <iomanip>
+
+// ---------------- DEPARTMENT FILE OPERATIONS ----------------
 
 // Save all department details in the file
 bool FileManager::saveDepartments(const DepartmentManager& departmentManager, const string& filename)
@@ -51,12 +54,6 @@ bool FileManager::loadDepartments(DepartmentManager& departmentManager, const st
 
     if (!(file >> header))
     {
-        if (file.eof() && !file.bad())
-        {
-            departmentManager.departments.clear();
-            return true;
-        }
-
         return false;
     }
 
@@ -120,7 +117,8 @@ bool FileManager::loadDepartments(DepartmentManager& departmentManager, const st
             {
                 return false;
             }
-            // Avoid duplicate doctor IDs in one department
+
+            // Check for duplicate doctor IDs in one department
             for (size_t k = 0; k < data.doctorIds.size(); k++)
             {
                 if (data.doctorIds[k] == doctorID)
@@ -154,8 +152,10 @@ bool FileManager::loadDepartments(DepartmentManager& departmentManager, const st
     for (size_t i = 0; i < loadedData.size(); i++)
     {
         Department department(loadedData[i].name, loadedData[i].description, loadedData[i].location);
+
         department.departmentId = loadedData[i].id;
         department.doctorIds = loadedData[i].doctorIds;
+
         loadedDepartments.push_back(department);
     }
 
@@ -169,6 +169,8 @@ bool FileManager::loadDepartments(DepartmentManager& departmentManager, const st
     return true;
 }
 
+
+// ---------------- DOCTOR FILE OPERATIONS ----------------
 
 // Save all doctor details in the file
 bool FileManager::saveDoctors(const DoctorManager& doctorManager, const string& filename)
@@ -201,7 +203,7 @@ bool FileManager::saveDoctors(const DoctorManager& doctorManager, const string& 
 
 
 // Load all doctor details from the file
-bool FileManager::loadDoctors(DoctorManager& doctorManager,const string& filename)
+bool FileManager::loadDoctors(DoctorManager& doctorManager, const string& filename)
 {
     ifstream file(filename);
 
@@ -215,12 +217,6 @@ bool FileManager::loadDoctors(DoctorManager& doctorManager,const string& filenam
 
     if (!(file >> header))
     {
-        if (file.eof() && !file.bad())
-        {
-            doctorManager.doctors.clear();
-            return true;
-        }
-
         return false;
     }
 
@@ -247,7 +243,7 @@ bool FileManager::loadDoctors(DoctorManager& doctorManager,const string& filenam
             return false;
         }
 
-        if (!(file >> label >> departmentID) || label != "DepartmentID" || departmentID < 0)
+        if (!(file >> label >> departmentID) || label != "DepartmentID" || departmentID <= 0)
         {
             return false;
         }
@@ -267,10 +263,12 @@ bool FileManager::loadDoctors(DoctorManager& doctorManager,const string& filenam
             return false;
         }
 
-        if (!(file >> label >> availability) || label != "Availability" || (availability != 0 && availability != 1))
+        if (!(file >> label >> availability) || label != "Availability" ||
+            (availability != 0 && availability != 1))
         {
             return false;
         }
+
         // Check for duplicate doctor IDs
         for (size_t j = 0; j < loadedDoctors.size(); j++)
         {
@@ -298,9 +296,12 @@ bool FileManager::loadDoctors(DoctorManager& doctorManager,const string& filenam
     {
         Doctor::counter = highestID;
     }
+
     return true;
 }
 
+
+// ---------------- SAVE AND LOAD BOTH ----------------
 
 // Save both departments and doctors
 bool FileManager::saveAll(const DepartmentManager& departmentManager, const DoctorManager& doctorManager)
@@ -309,6 +310,7 @@ bool FileManager::saveAll(const DepartmentManager& departmentManager, const Doct
     {
         return false;
     }
+
     if (!saveDoctors(doctorManager))
     {
         return false;
@@ -317,23 +319,140 @@ bool FileManager::saveAll(const DepartmentManager& departmentManager, const Doct
     return true;
 }
 
+
 // Load both departments and doctors
 bool FileManager::loadAll(DepartmentManager& departmentManager, DoctorManager& doctorManager)
 {
+    int oldDepartmentCounter = Department::counter;
+    int oldDoctorCounter = Doctor::counter;
+
     DepartmentManager tempDepartments;
     DoctorManager tempDoctors;
 
     if (!loadDepartments(tempDepartments))
     {
+        Department::counter = oldDepartmentCounter;
+        Doctor::counter = oldDoctorCounter;
         return false;
     }
 
     if (!loadDoctors(tempDoctors))
     {
+        Department::counter = oldDepartmentCounter;
+        Doctor::counter = oldDoctorCounter;
         return false;
     }
-    // Replace the existing data after both files load successfully
+
+    // Check whether every doctor belongs to an existing department
+    for (size_t i = 0; i < tempDoctors.doctors.size(); i++)
+    {
+        int departmentID = tempDoctors.doctors[i].departmentId;
+        bool found = false;
+
+        for (size_t j = 0; j < tempDepartments.departments.size(); j++)
+        {
+            if (tempDepartments.departments[j].departmentId == departmentID)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            Department::counter = oldDepartmentCounter;
+            Doctor::counter = oldDoctorCounter;
+            return false;
+        }
+    }
+
+    // Check whether department doctor IDs match doctor records
+    for (size_t i = 0; i < tempDepartments.departments.size(); i++)
+    {
+        for (size_t j = 0; j < tempDepartments.departments[i].doctorIds.size(); j++)
+        {
+            int doctorID = tempDepartments.departments[i].doctorIds[j];
+            bool found = false;
+
+            for (size_t k = 0; k < tempDoctors.doctors.size(); k++)
+            {
+                if (tempDoctors.doctors[k].doctorId == doctorID &&
+                    tempDoctors.doctors[k].departmentId == tempDepartments.departments[i].departmentId)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                Department::counter = oldDepartmentCounter;
+                Doctor::counter = oldDoctorCounter;
+                return false;
+            }
+        }
+    }
+
+    // Check whether every doctor is also listed in its department
+    for (size_t i = 0; i < tempDoctors.doctors.size(); i++)
+    {
+        int doctorID = tempDoctors.doctors[i].doctorId;
+        int departmentID = tempDoctors.doctors[i].departmentId;
+        bool found = false;
+
+        for (size_t j = 0; j < tempDepartments.departments.size(); j++)
+        {
+            if (tempDepartments.departments[j].departmentId == departmentID)
+            {
+                for (size_t k = 0; k < tempDepartments.departments[j].doctorIds.size(); k++)
+                {
+                    if (tempDepartments.departments[j].doctorIds[k] == doctorID)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            Department::counter = oldDepartmentCounter;
+            Doctor::counter = oldDoctorCounter;
+            return false;
+        }
+    }
+
+    // Find highest department ID
+    int highestDepartmentID = 0;
+
+    for (size_t i = 0; i < tempDepartments.departments.size(); i++)
+    {
+        if (tempDepartments.departments[i].departmentId > highestDepartmentID)
+        {
+            highestDepartmentID = tempDepartments.departments[i].departmentId;
+        }
+    }
+
+    // Find highest doctor ID
+    int highestDoctorID = 0;
+
+    for (size_t i = 0; i < tempDoctors.doctors.size(); i++)
+    {
+        if (tempDoctors.doctors[i].doctorId > highestDoctorID)
+        {
+            highestDoctorID = tempDoctors.doctors[i].doctorId;
+        }
+    }
+
+    // Replace existing data after successful loading
     departmentManager.departments.swap(tempDepartments.departments);
     doctorManager.doctors.swap(tempDoctors.doctors);
+
+    // Restore counters
+    Department::counter = highestDepartmentID;
+    Doctor::counter = highestDoctorID;
+
     return true;
 }
