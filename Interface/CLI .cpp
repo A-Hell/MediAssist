@@ -2,11 +2,12 @@
 #include "CLI.h"
 
 // Constructor that takes a reference to an existing HospitalSystem instance
-CLI::CLI(HospitalSystem& hospital) : hospital(hospital) {}
+CLI::CLI(HospitalSystem& hospital) : hospital(hospital), running(false) {}
 
 // Starts the CLI 
 void CLI::run() 
 {
+	running = true;
 	handleMainMenu();
 }
 
@@ -36,13 +37,12 @@ void CLI::handleMainMenu()
 			handleDepartmentMenu();
 			break;
 		case 0:
-			createPause("Exiting the system.Goodbye!");
 			Exit();
 			break;
 		default:
 			cout << "Invalid choice. Please try again." << endl;
 		}
-	} while (choice != 0);
+	} while (choice != 0 && running);
 }
 
 void CLI::showMainMenu()
@@ -83,13 +83,12 @@ void CLI::handlePatientMenu()
 		case 99:
 			return;
 		case 0:
-			createPause("Exiting the system.Goodbye!");
 			Exit();
 			break;
 		default:
 			cout << "Invalid choice. Please try again." << endl;
 		}
-	} while (choice != 0 && choice != 99);
+	} while (choice != 0 && choice != 99 && running);
 }
 
 void CLI::showPatientMenu()
@@ -319,13 +318,12 @@ void CLI::handlePatientUpdation()
 				handlePatientMenu();
 				break;
 			case 0:
-				createPause("Exiting the system.Goodbye!");
 				Exit();
 				break;
 			default:
 				cout << "Invalid choice. Please try again." << endl;
 			}
-		} while (choice != 0 && choice != 99);
+		} while (choice != 0 && choice != 99 && running);
 	}
 	else
 		cout << RED + BOLD + "Patient with ID " << patientID << " not found." << RESET << endl;
@@ -390,13 +388,12 @@ void CLI::handleDoctorMenu()
 		case 99:
 			return;
 		case 0:
-			createPause("Exiting the system.Goodbye!");
 			Exit();
 			break;
 		default:
 			cout << "Invalid choice. Please try again." << endl;
 		}
-	} while (choice != 0 && choice != 99);
+	} while (choice != 0 && choice != 99 && running);
 }
 
 void CLI::showDoctorMenu()
@@ -591,13 +588,12 @@ void CLI::handleDoctorUpdation()
 				return;
 				break;
 			case 0:
-				createPause("Exiting the system.Goodbye!");
 				Exit();
 				break;
 			default:
 				cout << "Invalid choice. Please try again." << endl;
 			}
-		} while (choice != 0 && choice != 99);
+		} while (choice != 0 && choice != 99 && running);
 	}
 	else
 		cout << RED + BOLD + "Doctor with ID " << doctorID << " not found." << RESET << endl;
@@ -660,13 +656,12 @@ void CLI::handleDepartmentMenu()
 			return;
 			break;
 		case 0:
-			createPause("Exiting the system.Goodbye!");
 			Exit();
 			break;
 		default:
 			cout << "Invalid choice. Please try again." << endl;
 		}
-	} while (choice != 0 && choice != 99);
+	} while (choice != 0 && choice != 99 && running);
 }
 
 void CLI::showDepartmentMenu()
@@ -805,13 +800,12 @@ void CLI::handleDepartmentUpdation()
 			case 99:
 				return;
 			case 0:
-				createPause("Exiting the system.Goodbye!");
 				Exit();
 				break;
 			default:
 				cout << "Invalid choice. Please try again." << endl;
 			}
-		} while (choice != 0 && choice != 99);
+		} while (choice != 0 && choice != 99 && running);
 	}
 	else
 		cout << RED + BOLD + "Department with ID " << departmentID << " not found." << RESET << endl;
@@ -897,4 +891,7 @@ void CLI::createPause(const string& message)
 
 void CLI::clearScreen() { cout << RESET; system("cls"); }
 
-void CLI::Exit() { exit(0); }
+void CLI::Exit() {
+	running = false;
+	createPause("Exiting the system.Goodbye!");
+}

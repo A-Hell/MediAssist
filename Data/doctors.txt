@@ -1,22 +1,30 @@
 MEDIASSIST_DOCTORS_V1
-4
-1
-"Dr. Ahmed"
-"Cardiologist"
-1
-1
-2
-"Dr. Sara"
-"Pulmonologist"
-2
-1
-3
-"Dr. Ali"
-"Gastroenterologist"
-3
-1
-4
-"Dr. Usman"
-"Orthopedic Surgeon"
-4
-1
+DoctorCount 4
+
+DoctorID 1
+DepartmentID 1
+Name "Dr. Alice Smith"
+Phone "555-1234"
+Specialization "Cardiologist"
+Availability 1
+
+DoctorID 2
+DepartmentID 2
+Name "Dr. Bob Johnson"
+Phone "555-5678"
+Specialization "Pulmonologist"
+Availability 1
+
+DoctorID 3
+DepartmentID 3
+Name "Dr. Carol Williams"
+Phone "555-8765"
+Specialization "Gastroenterologist"
+Availability 1
+
+DoctorID 4
+DepartmentID 4
+Name "Dr. David Brown"
+Phone "555-4321"
+Specialization "Orthopedic Surgeon"
+Availability 1

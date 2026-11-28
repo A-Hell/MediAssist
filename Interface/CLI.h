@@ -6,6 +6,8 @@
 
 class CLI
 {
+    bool running;
+
 private:
     HospitalSystem& hospital;
 
