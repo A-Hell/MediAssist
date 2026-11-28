@@ -3,6 +3,7 @@
 #include "Common.h"
 
 class PatientManager;
+class FileManager;
 
 class Patient
 {
@@ -17,6 +18,7 @@ class Patient
     inline static int counter = 1;
 
     friend class PatientManager;
+    friend class FileManager;
 
     int generatePatientID() 
     { 

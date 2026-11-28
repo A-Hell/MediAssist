@@ -10,6 +10,7 @@ class PatientManager
 private:
     // Stores all registered patients using our Hash Table.
     HashTable patientTable;
+    friend class FileManager;
 
 public:
     // Creates the PatientManager with an empty Hash Table.

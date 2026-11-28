@@ -6,7 +6,7 @@
 class AppointmentManager
 {
     BST appointmentTree;
-
+    friend class FileManager;
     // Private helper functions
  
     // Check if an appointment with the given ID exists in the BST

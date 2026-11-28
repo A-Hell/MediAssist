@@ -31,6 +31,8 @@ private:
         return patientID % capacity;
     }
 
+    friend class FileManager;
+
 public:
 
     // Creates the Hash Table with the given capacity. If none is provided 10 buckets are used by default.

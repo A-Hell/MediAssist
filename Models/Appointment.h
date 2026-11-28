@@ -4,6 +4,7 @@
 #include "../Models/Symptoms.h"
 
 class AppointmentManager;
+class FileManager;
 
 class Appointment
 {
@@ -18,6 +19,7 @@ class Appointment
     inline static int counter = 1;
 
     friend class AppointmentManager;
+    friend class FileManager;
 
     int generateAppointmentID()
     {

@@ -119,7 +119,7 @@ class BST
 		return nullptr;
 	}
 
-
+	friend class FileManager;
 
 public:
 	// Public Interfaces
