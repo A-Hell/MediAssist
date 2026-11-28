@@ -1,4 +1,3 @@
-
 #ifndef PATIENTMANAGER_H
 #define PATIENTMANAGER_H
 

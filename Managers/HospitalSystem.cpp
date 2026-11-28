@@ -235,10 +235,10 @@ string HospitalSystem::symptomToString(Symptom symptom) {
 
 bool HospitalSystem::saveHospitalData()
 {
-    return FileManager::saveAll(departmentManager, doctorManager);
+    return FileManager::saveAll(patientManager, departmentManager, doctorManager, appointmentManager);
 }
 
 bool HospitalSystem::loadHospitalData()
 {
-    return FileManager::loadAll(departmentManager, doctorManager);
+    return FileManager::loadAll(patientManager, departmentManager, doctorManager, appointmentManager);
 }

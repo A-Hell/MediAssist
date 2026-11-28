@@ -1,22 +1,30 @@
 MEDIASSIST_DOCTORS_V1
-4
-1
-"Dr. Ahmed"
-"Cardiologist"
-1
-1
-2
-"Dr. Sara"
-"Pulmonologist"
-2
-1
-3
-"Dr. Ali"
-"Gastroenterologist"
-3
-1
-4
-"Dr. Usman"
-"Orthopedic Surgeon"
-4
-1
+DoctorCount 4
+
+DoctorID 1
+DepartmentID 1
+Name "Dr. Ahmed"
+Phone "N/A"
+Specialization "Cardiologist"
+Availability 1
+
+DoctorID 2
+DepartmentID 2
+Name "Dr. Sara"
+Phone "N/A"
+Specialization "Pulmonologist"
+Availability 1
+
+DoctorID 3
+DepartmentID 3
+Name "Dr. Ali"
+Phone "N/A"
+Specialization "Gastroenterologist"
+Availability 1
+
+DoctorID 4
+DepartmentID 4
+Name "Dr. Usman"
+Phone "N/A"
+Specialization "Orthopedic Surgeon"
+Availability 1
